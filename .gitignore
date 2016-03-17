@@ -20,6 +20,7 @@
 
 # project release file
 /*.war
+*.jar
 
 # plugin release files
 /*.zip
@@ -31,3 +32,13 @@
 
 # "temporary" build files
 /target
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/

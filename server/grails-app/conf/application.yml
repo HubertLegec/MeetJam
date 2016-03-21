@@ -49,6 +49,8 @@ environments:
 ---
 grails:
     profile: rest-api
+    mongodb:
+        connectionString: mongodb://pikUser:abc123@ds023088.mlab.com:23088/meet_jam
     codegen:
         defaultPackage: meetjam
     spring:

@@ -1,8 +1,5 @@
 package com.pik.configuration;
 
-/**
- * Created by Hubert on 02.04.2016.
- */
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

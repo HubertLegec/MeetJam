@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by hubert.legec on 2016-04-04.
- */
+
 @Service
 public class AccountService {
     @Autowired

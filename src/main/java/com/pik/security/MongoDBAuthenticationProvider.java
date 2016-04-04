@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-/**
- * Created by Hubert on 02.04.2016.
- */
+
 @Service
 public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 

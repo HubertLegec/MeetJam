@@ -1,8 +1,6 @@
 package com.pik.model.dto;
 
-/**
- * Created by Hubert on 02.04.2016.
- */
+
 public class AccountDTO {
     private String login;
     private String password;

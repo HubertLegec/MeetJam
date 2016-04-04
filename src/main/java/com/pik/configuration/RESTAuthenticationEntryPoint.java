@@ -1,9 +1,5 @@
 package com.pik.configuration;
 
-/**
- * Created by Hubert on 02.04.2016.
- */
-
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 

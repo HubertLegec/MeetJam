@@ -6,7 +6,6 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.web.util.NestedServletException;
 
@@ -19,9 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final String SECURITY_TOKEN_KEY = "token";
@@ -103,13 +100,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
             logger.error( "Error during authUserByToken", e );
         }
         return authToken;
-    }
-
-    protected void successfulAuthentication( HttpServletRequest request, HttpServletResponse response, Authentication authResult ) throws IOException, ServletException {
-
-        SecurityContextHolder.getContext( ).setAuthentication( authResult );
-
-        new CustomAuthenticationSuccessHandler( ).onAuthenticationSuccess( request, response, authResult );
     }
 
     @Override

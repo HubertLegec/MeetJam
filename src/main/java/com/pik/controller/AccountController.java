@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountController {

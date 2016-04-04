@@ -18,9 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 import javax.annotation.Resource;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 @Configuration
 @EnableWebSecurity
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)

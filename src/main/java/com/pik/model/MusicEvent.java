@@ -5,9 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 @Document
 public class MusicEvent {
     @Id

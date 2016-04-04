@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 @RestController
 @RequestMapping("/api/events")
 public class EventRestController{

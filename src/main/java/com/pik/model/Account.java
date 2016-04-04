@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Hubert on 01.04.2016.
- */
+
 public class Account implements UserDetails{
     @Id
     private BigInteger id;

@@ -1,20 +1,24 @@
 buildscript {
 	ext {
 		springBootVersion = '1.4.0.M1'
+        aspectjVersion = '1.8.4'
 	}
 	repositories {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://maven.eveoh.nl/content/repositories/releases"}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "nl.eveoh:gradle-aspectj:1.6"
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'aspectj'
 
 jar {
 	baseName = 'meetjam'
@@ -52,4 +56,3 @@ eclipse {
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
 }
-

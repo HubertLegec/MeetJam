@@ -4,14 +4,11 @@ import com.pik.model.Account;
 import com.pik.model.dto.AccountDTO;
 import com.pik.repository.AccountRepository;
 import com.pik.service.AccountService;
-import edu.vt.middleware.password.*;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +26,6 @@ public class AccountController {
 
     @RequestMapping(value = "user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Account> user(){
-        System.out.println("get user");
         return new ResponseEntity<>(new Account("Adam", "123", "email"), HttpStatus.OK);
     }
 

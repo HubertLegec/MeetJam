@@ -66,7 +66,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
                 }
             }
         }
-        System.out.println("go ahead");
         chain.doFilter( request, response );// return to others spring security filters
     }
 

@@ -18,9 +18,7 @@ public class UserDetailsStorageService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Check: " + username);
         Account account = accountRepository.findByLogin(username);
-        System.out.println(account);
         if (account != null) {
             return account;
         } else {

@@ -1,7 +1,5 @@
 package com.pik.configuration;
 
-import com.pik.security.CORSFilter;
-import com.pik.security.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
 import javax.annotation.Resource;
 
@@ -43,8 +36,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     private AuthenticationSuccessHandler authenticationSuccessHandler;
     @Resource
     private LogoutSuccessHandler logoutSuccessHandler;
-    @Resource
-    private CORSFilter corsFilter;
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception{
@@ -66,9 +57,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
         // Logout
         http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
-
-        // CORS
-        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
 
         // CSRF
         http.csrf().disable();

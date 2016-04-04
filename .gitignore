@@ -42,3 +42,8 @@
 .classpath
 .project
 .settings/
+
+# Gradle
+build/
+.gradle/
+

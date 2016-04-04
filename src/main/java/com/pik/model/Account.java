@@ -19,7 +19,7 @@ public class Account implements UserDetails{
     private List<Authority> authorities = new ArrayList<>();
 
 
-    public Account(){}
+    Account(){}
 
     public Account(String username, String password, String email) {
         this.login = username;
@@ -28,25 +28,9 @@ public class Account implements UserDetails{
         authorities.add(new Authority(Authority.USER));
     }
 
-    public Account(String username, String password, String email, Authority authority) {
-        this.login = username;
-        this.password = password;
-        this.email = email;
-        authorities.add(authority);
-    }
 
-
-    public BigInteger getId() {
-        return id;
-    }
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
     public String getLogin() {
         return login;
-    }
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     @Override
@@ -54,20 +38,8 @@ public class Account implements UserDetails{
         return authorities;
     }
 
-    public void addAuthority(Authority authority){
-        authorities.add(authority);
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
@@ -93,10 +65,6 @@ public class Account implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 }

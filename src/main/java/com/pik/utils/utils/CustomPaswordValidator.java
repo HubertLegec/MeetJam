@@ -1,4 +1,4 @@
-package com.pik.utils;
+package com.pik.utils.utils;
 
 import edu.vt.middleware.password.*;
 

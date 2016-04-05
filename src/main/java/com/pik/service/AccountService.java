@@ -3,7 +3,7 @@ package com.pik.service;
 import com.pik.model.Account;
 import com.pik.model.dto.AccountDTO;
 import com.pik.repository.AccountRepository;
-import com.pik.utils.CustomPaswordValidator;
+import com.pik.utils.utils.CustomPaswordValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

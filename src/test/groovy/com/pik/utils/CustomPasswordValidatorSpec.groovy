@@ -1,5 +1,6 @@
 package com.pik.utils
 
+import com.pik.utils.utils.CustomPaswordValidator
 import spock.lang.Shared
 import spock.lang.Specification
 

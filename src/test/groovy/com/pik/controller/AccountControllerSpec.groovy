@@ -1,4 +1,4 @@
-package com.pik.controllers
+package com.pik.controller
 
 import spock.lang.Specification
 

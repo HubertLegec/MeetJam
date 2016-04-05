@@ -1,5 +1,7 @@
 package com.pik.configuration;
 
+import com.pik.repository.AccountRepository;
+import com.pik.security.MongoDBAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -26,5 +28,10 @@ public class SecurityConfiguration {
 	@Bean
 	public LogoutSuccessHandler logoutSuccessHandler() {
 		return new RESTLogoutSuccessHandler();
+	}
+
+	@Bean
+	public MongoDBAuthenticationProvider mongoDBAuthenticationProvider(AccountRepository accountRepository){
+		return new MongoDBAuthenticationProvider(accountRepository);
 	}
 }

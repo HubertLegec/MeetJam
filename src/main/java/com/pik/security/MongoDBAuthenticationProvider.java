@@ -9,16 +9,18 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 
-@Service
 public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
+    private AccountRepository accountRepository;
+
     @Autowired
-    private AccountRepository accounts;
+    public MongoDBAuthenticationProvider(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
@@ -29,7 +31,7 @@ public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthentica
         UserDetails loadedUser;
 
         try {
-            Account account = accounts.findByLogin(username);
+            Account account = accountRepository.findByLogin(username);
             loadedUser = new User(account.getLogin(), account.getPassword(), new ArrayList<>());
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);

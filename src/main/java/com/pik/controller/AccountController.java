@@ -39,7 +39,7 @@ public class AccountController {
         }
         catch (InvalidRegisterParametersException e)
         {
-            return new ResponseEntity<>(new ResultMessageDTO(""),HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new ResultMessageDTO(e.getMessages()),HttpStatus.NOT_ACCEPTABLE);
         }
         catch (DataAccessResourceFailureException e)
         {

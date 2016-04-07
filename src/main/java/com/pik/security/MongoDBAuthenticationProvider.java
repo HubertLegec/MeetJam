@@ -11,14 +11,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
-
-@Service
 public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
-    @Autowired
     private AccountRepository accounts;
+
+    @Autowired
+    public MongoDBAuthenticationProvider(AccountRepository accountRepository) {
+        this.accounts = accountRepository;
+    }
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
@@ -30,7 +30,7 @@ public class MongoDBAuthenticationProvider extends AbstractUserDetailsAuthentica
 
         try {
             Account account = accounts.findByLogin(username);
-            loadedUser = new User(account.getLogin(), account.getPassword(), new ArrayList<>());
+            loadedUser = new User(account.getUsername(), account.getPassword(), account.getAuthorities());
         } catch (Exception repositoryProblem) {
             throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
         }

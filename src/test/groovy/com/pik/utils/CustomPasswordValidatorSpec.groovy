@@ -1,14 +1,13 @@
 package com.pik.utils
 
-import com.pik.utils.utils.CustomPaswordValidator
 import spock.lang.Shared
 import spock.lang.Specification
 
 class CustomPasswordValidatorSpec extends Specification {
-    @Shared CustomPaswordValidator validator
+    @Shared CustomPasswordValidator validator
 
     def setup(){
-        validator = new CustomPaswordValidator()
+        validator = new CustomPasswordValidator()
     }
 
     def 'validation of empty password string should fail'() {

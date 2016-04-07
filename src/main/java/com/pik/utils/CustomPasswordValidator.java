@@ -1,15 +1,15 @@
-package com.pik.utils.utils;
+package com.pik.utils;
 
 import edu.vt.middleware.password.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomPaswordValidator {
+public class CustomPasswordValidator {
     private PasswordValidator validator;
     private String message;
 
-    public CustomPaswordValidator(){
+    public CustomPasswordValidator(){
         // password must be between 8 and 16 chars long
         LengthRule lengthRule = new LengthRule(8, 16);
         // don't allow whitespace
@@ -35,7 +35,7 @@ public class CustomPaswordValidator {
         // don't allow 4 repeat characters
         RepeatCharacterRegexRule repeatRule = new RepeatCharacterRegexRule(4);
         // group all rules together in a List
-        List<Rule> ruleList = new ArrayList<Rule>();
+        List<Rule> ruleList = new ArrayList<>();
         ruleList.add(lengthRule);
         ruleList.add(whitespaceRule);
         ruleList.add(charRule);

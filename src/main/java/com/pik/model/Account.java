@@ -1,6 +1,7 @@
 package com.pik.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+@Document
 public class Account implements UserDetails{
     @Id
     private BigInteger id;
@@ -18,19 +19,11 @@ public class Account implements UserDetails{
     private String email;
     private List<Authority> authorities = new ArrayList<>();
 
-
-    Account(){}
-
-    public Account(String username, String password, String email) {
-        this.login = username;
+    public Account(String login, String password, String email) {
+        this.login = login;
         this.password = password;
         this.email = email;
         authorities.add(new Authority(Authority.USER));
-    }
-
-
-    public String getLogin() {
-        return login;
     }
 
     @Override

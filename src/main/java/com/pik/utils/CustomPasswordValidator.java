@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CustomPasswordValidator {
     private PasswordValidator validator;
-    private String message;
+    private List<String> passwordIssues;
 
     public CustomPasswordValidator(){
         // password must be between 8 and 16 chars long
@@ -48,11 +48,12 @@ public class CustomPasswordValidator {
 
     public boolean validatePassword(String password){
         RuleResult result = validator.validate(new PasswordData(new Password(password)));
-        message = String.join("\n",validator.getMessages(result));
+        passwordIssues = validator.getMessages(result);
         return result.isValid();
     }
 
-    public String getLastMessage(){
-        return message;
+    public List<String> getLastPasswordIssues()
+    {
+        return passwordIssues;
     }
 }

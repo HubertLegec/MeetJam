@@ -1,17 +1,17 @@
 buildscript {
 	ext {
 		springBootVersion = '1.4.0.M1'
-        aspectjVersion = '1.8.4'
+		aspectjVersion = '1.8.4'
 	}
 	repositories {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://maven.eveoh.nl/content/repositories/releases"}
+		maven { url "https://maven.eveoh.nl/content/repositories/releases"}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath "nl.eveoh:gradle-aspectj:1.6"
+		classpath "nl.eveoh:gradle-aspectj:1.6"
 	}
 }
 
@@ -19,6 +19,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 apply plugin: 'aspectj'
+apply plugin: 'groovy'
 
 jar {
 	baseName = 'meetjam'
@@ -39,11 +40,12 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-remote-shell")
+	compile("org.springframework.boot:spring-boot-starter-aop")
 	compile('commons-validator:commons-validator:1.4.0')
 	compile('edu.vt.middleware:vt-password:3.1.2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile ("org.spockframework:spock-core:1.0-groovy-2.4")
-    testRuntime("org.spockframework:spock-spring:1.0-groovy-2.4")
+	testCompile("org.spockframework:spock-spring:1.0-groovy-2.4")
 }
 
 
@@ -57,3 +59,4 @@ eclipse {
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.9'
 }
+

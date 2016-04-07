@@ -4,15 +4,12 @@ import com.pik.model.Account;
 import com.pik.model.dto.AccountDTO;
 import com.pik.repository.AccountRepository;
 import com.pik.utils.CustomPasswordValidator;
-import com.sun.xml.internal.ws.developer.Serialization;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 
 public class AccountService {
-
 
     private AccountRepository accountRepository;
     private CustomPasswordValidator passwordValidator = new CustomPasswordValidator();
@@ -24,21 +21,25 @@ public class AccountService {
     }
 
     public String createNewAccount(AccountDTO accountDTO){
-        if(accountRepository.findByLogin(accountDTO.login) != null)
+        if(accountRepository.findByLogin(accountDTO.getLogin()) != null)
             return "User with this login already exists!";
 
-        if(!EmailValidator.getInstance().isValid(accountDTO.email))
+        if(!EmailValidator.getInstance().isValid(accountDTO.getEmail()))
             return "User email is invalid!";
 
-        if (!passwordValidator.validatePassword(accountDTO.password)) {
+        if (!passwordValidator.validatePassword(accountDTO.getPassword())) {
             return passwordValidator.getLastMessage();
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        Account newAccount = new Account(accountDTO.login, encoder.encode(accountDTO.password), accountDTO.email);
+        Account newAccount = new Account(accountDTO.getLogin(), encoder.encode(accountDTO.getPassword()), accountDTO.getEmail());
         accountRepository.save(newAccount);
 
         return "Success";
+    }
+
+    public Account findAccountByLogin(String login){
+        return accountRepository.findByLogin(login);
     }
 
 }

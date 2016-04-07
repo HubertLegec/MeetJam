@@ -16,7 +16,9 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'aspectj'
 
@@ -41,7 +43,9 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-remote-shell")
 	compile('commons-validator:commons-validator:1.4.0')
 	compile('edu.vt.middleware:vt-password:3.1.2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('io.jsonwebtoken:jjwt:0.4')
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile ("org.spockframework:spock-core:1.0-groovy-2.4")
     testRuntime("org.spockframework:spock-spring:1.0-groovy-2.4")
 }

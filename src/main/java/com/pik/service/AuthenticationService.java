@@ -7,9 +7,7 @@ import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -28,10 +26,9 @@ public class AuthenticationService {
 
     public AuthenticationResponseDTO login(@NotNull String login, @NotNull String password){
         try {
-            Authentication authentication = this.authenticationManager.authenticate(
+            this.authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(login, password)
             );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Reload password post-authentication so we can generate token
             UserDetails userDetails = accountRepository.findByLogin(login);
@@ -47,6 +44,7 @@ public class AuthenticationService {
             AuthenticationResponseDTO responseDTO = new AuthenticationResponseDTO();
             responseDTO.token = null;
             responseDTO.valid = false;
+            responseDTO.messages.add(e.getMessage());
 
             return responseDTO;
         }

@@ -1,7 +1,6 @@
 package com.pik.acceptance
 
 import com.pik.base.MvcIntegrationSpec
-import com.pik.model.dto.ResultMessageDTO
 import com.pik.model.errors.InvalidRegisterParameterError
 import com.pik.repository.AccountRepository
 import groovy.json.JsonSlurper
@@ -48,12 +47,12 @@ class RegistrationSpec extends MvcIntegrationSpec {
     }
 
     private ResultActions registerUser(String login, String email, String password) {
-        ResultActions resultActions = mockMvc.perform(post('/api/account/register').
-                contentType(MediaType.APPLICATION_JSON).
-                accept(MediaType.APPLICATION_JSON).
-                param("login", login).
-                param("email", email).
-                param("password", password))
+        ResultActions resultActions = mockMvc.perform(post('/api/account/register')
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .param("login", login)
+                .param("password", password)
+                .param("email", email))
         return resultActions
     }
 

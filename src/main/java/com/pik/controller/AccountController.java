@@ -12,10 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/account")
@@ -30,12 +26,10 @@ public class AccountController {
     }
 
     @RequestMapping(value = "register", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<ResultMessageDTO> registerNewAccount(@RequestParam(name = "login") String login,
-                                                               @RequestParam(name = "email") String email,
-                                                               @RequestParam(name = "password") String password){
+    public ResponseEntity<ResultMessageDTO> registerNewAccount(@ModelAttribute AccountDTO accountDTO){
         try
         {
-            accountService.createNewAccount(new AccountDTO(login,email,password));
+            accountService.createNewAccount(accountDTO);
         }
         catch (InvalidRegisterParametersException e)
         {
@@ -49,20 +43,5 @@ public class AccountController {
         return new ResponseEntity<>(new ResultMessageDTO("Account created."),HttpStatus.OK);
     }
 
-    //Test Methods
-    @RequestMapping(value = "getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String>> getAllUsers(){
-        List<String> accounts = accountRepository
-                .findAll()
-                .stream()
-                .map(u -> u.getUsername())
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(accounts, HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "deleteallusers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResultMessageDTO> deleteAllUsers(){
-        accountRepository.deleteAll();
-        return new ResponseEntity<>(new ResultMessageDTO("Users erased."), HttpStatus.OK);
-    }
 }

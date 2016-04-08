@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.annotation.Resource;
 
@@ -30,10 +28,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     private AuthenticationEntryPoint authenticationEntryPoint;
     @Resource
     private AuthenticationFailureHandler authenticationFailureHandler;
-    @Resource
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-    @Resource
-    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception{
@@ -50,31 +44,12 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
         // Handlers and entry points
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-        http.formLogin().successHandler(authenticationSuccessHandler);
-        http.formLogin().failureHandler(authenticationFailureHandler);
 
         // Logout
-        http.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
+        http.logout().logoutUrl("/logout");
 
         // CSRF
         http.csrf().disable();
-//        http.csrf().requireCsrfProtectionMatcher(
-//                new AndRequestMatcher(
-//                        // Apply CSRF protection to all paths that do NOT match the ones below
-//
-//                        // We disable CSRF at login/logout, but only for OPTIONS methods
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.OPTIONS.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/logout*/**", HttpMethod.OPTIONS.toString())),
-//
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api*/**", HttpMethod.GET.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api*/**", HttpMethod.HEAD.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api*/**", HttpMethod.OPTIONS.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api*/**", HttpMethod.TRACE.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api/account/register", HttpMethod.POST.toString())),
-//                        new NegatedRequestMatcher(new AntPathRequestMatcher("/api/open*/**"))
-//                )
-//        );
-//        http.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class); // CSRF tokens handling
     }
 
 }

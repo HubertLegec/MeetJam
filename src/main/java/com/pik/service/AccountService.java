@@ -10,17 +10,15 @@ import com.sun.istack.internal.NotNull;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class AccountService {
 
+public class AccountService {
 
     private AccountRepository accountRepository;
     private CustomPasswordValidator passwordValidator = new CustomPasswordValidator();
-
 
     @Autowired
     public AccountService(AccountRepository accountRepository) {
@@ -54,6 +52,10 @@ public class AccountService {
         accountRepository.save(newAccount);
 
         return newAccount;
+    }
+
+    public Account findAccountByLogin(String login){
+        return accountRepository.findByLogin(login);
     }
 
 }

@@ -16,7 +16,8 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'aspectj'
 apply plugin: 'groovy'
@@ -43,17 +44,12 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-aop")
 	compile('commons-validator:commons-validator:1.4.0')
 	compile('edu.vt.middleware:vt-password:3.1.2')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('io.jsonwebtoken:jjwt:0.4')
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile ("org.spockframework:spock-core:1.0-groovy-2.4")
-	testCompile("org.spockframework:spock-spring:1.0-groovy-2.4")
-}
-
-
-eclipse {
-	classpath {
-		containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-	}
+	testCompile ('com.fasterxml.jackson.core:jackson-databind:2.0.1')
+    testRuntime("org.spockframework:spock-spring:1.0-groovy-2.4")
 }
 
 task wrapper(type: Wrapper) {

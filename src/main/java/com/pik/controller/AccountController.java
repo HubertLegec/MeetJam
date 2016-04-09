@@ -33,14 +33,16 @@ public class AccountController {
         }
         catch (InvalidRegisterParametersException e)
         {
-            return new ResponseEntity<>(new ResultMessageDTO(e.getMessages()),HttpStatus.NOT_ACCEPTABLE);
+            ResultMessageDTO dto = new ResultMessageDTO();
+            dto.messages = e.getMessages();
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(dto);
         }
         catch (DataAccessResourceFailureException e)
         {
-            return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResultMessageDTO(e.getMessage()));
         }
 
-        return new ResponseEntity<>(new ResultMessageDTO("Account created."),HttpStatus.OK);
+        return ResponseEntity.ok(new ResultMessageDTO("Account created."));
     }
 
 

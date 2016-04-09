@@ -16,5 +16,4 @@ public class SecurityConfiguration {
 	public SimpleUrlAuthenticationFailureHandler authenticationFailureHandler() {
 		return new SimpleUrlAuthenticationFailureHandler();
 	}
-
 }

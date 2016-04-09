@@ -17,7 +17,6 @@ class AuthenticationControllerIntegrSpec extends MvcIntegrationSpec{
     public static final String PING_URL = '/ping'
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
 
-    @Ignore
     def 'access to secured url with valid token should be successful'(){
         when:
         def response = mockMvc.perform(post(LOGIN_URL)

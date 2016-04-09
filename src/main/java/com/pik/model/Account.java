@@ -39,6 +39,10 @@ public class Account implements UserDetails{
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public String getUsername() {
         return login;

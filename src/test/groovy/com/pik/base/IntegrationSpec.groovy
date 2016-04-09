@@ -22,7 +22,7 @@ class IntegrationSpec extends Specification {
     AccountRepository accountRepository
 
     @Shared
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder()
 
     void setup(){
         addSampleAccounts()
@@ -36,8 +36,8 @@ class IntegrationSpec extends Specification {
 
     protected addSampleAccounts(){
         testAccounts.each { acc ->
-            acc.setPassword(encoder.encode(acc.getPassword()))
-            accountRepository.save(acc)
+            String encryptedPassword = encoder.encode(acc.getPassword())
+            accountRepository.save(new Account(acc.getUsername(), encryptedPassword, acc.getEmail()))
         }
     }
 

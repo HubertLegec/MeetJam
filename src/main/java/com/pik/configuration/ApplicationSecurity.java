@@ -1,5 +1,6 @@
 package com.pik.configuration;
 
+import com.pik.security.CORSFilter;
 import com.pik.security.StatelessAuthenticationFilter;
 import com.pik.security.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
@@ -25,6 +27,8 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @Order(2)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
+    @Resource
+    private CORSFilter corsFilter;
     @Autowired
     private UserDetailsService userDetailsService;
     @Resource
@@ -64,6 +68,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
         // Logout
         http.logout().logoutUrl("/logout");
+
+        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
     }
 
     @Bean

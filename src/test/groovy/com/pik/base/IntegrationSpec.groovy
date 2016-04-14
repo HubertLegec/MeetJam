@@ -29,9 +29,7 @@ class IntegrationSpec extends Specification {
     }
 
     void cleanup(){
-        testAccounts.each { acc ->
             accountRepository.deleteAll()
-        }
     }
 
     protected addSampleAccounts(){

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.ResultActions
 import spock.lang.Shared
 
+import static com.pik.model.errors.InvalidRegisterParameterError.INVALID_PASSWORD
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 
 class RegistrationSpec extends MvcIntegrationSpec {
@@ -21,12 +22,14 @@ class RegistrationSpec extends MvcIntegrationSpec {
     @Shared protected static final String password = 'A!aBc6j3h';
 
 
-    def "user gives invalid password"(){
+    def "should return invalid password message when user gives invalid password"(){
+        given: "user gives invalid password"
+            String invalidPassword = '!';
         when:
-            ResultActions resultActions = registerUser(login,email,invalidPassword)
+            ResultActions resultActions = registerUser(login, email, invalidPassword)
 
         then:
-            getMessages(resultActions).contains(InvalidRegisterParameterError.INVALID_PASSWORD.message)
+            getMessages(resultActions).contains(INVALID_PASSWORD.message)
 
         cleanup:
             accountRepository.deleteByLogin(login)
@@ -34,7 +37,7 @@ class RegistrationSpec extends MvcIntegrationSpec {
 
     def "user tries to create account, giving already existing login"(){
         given: "User with given password already exists."
-            registerUser(login,email,password)
+            registerUser(login, email, password)
 
         when: "Another user registers with the same login."
             ResultActions resultActions = registerUser(login,email,invalidPassword)

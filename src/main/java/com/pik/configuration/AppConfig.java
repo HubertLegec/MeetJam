@@ -26,8 +26,8 @@ public class AppConfig {
     }
 
     @Bean
-    UserDetailsStorageService userDetailsService(){
-        return new UserDetailsStorageService();
+    UserDetailsStorageService userDetailsService(AccountRepository accountRepository){
+        return new UserDetailsStorageService(accountRepository);
     }
 
     @Bean

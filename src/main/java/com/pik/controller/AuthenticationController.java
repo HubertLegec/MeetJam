@@ -1,5 +1,6 @@
 package com.pik.controller;
 
+import com.pik.model.Authority;
 import com.pik.model.dto.AuthenticationRequestDTO;
 import com.pik.model.dto.AuthenticationResponseDTO;
 import com.pik.model.dto.ResultMessageDTO;
@@ -7,6 +8,7 @@ import com.pik.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,10 +22,8 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/auth/login", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> authenticationRequest(@ModelAttribute AuthenticationRequestDTO dto) {
-
-        AuthenticationResponseDTO result = authenticationService.login(dto.getLogin(), dto.getPassword());
-
+    public ResponseEntity<AuthenticationResponseDTO> authenticationRequest(@ModelAttribute AuthenticationRequestDTO dto) {
+        AuthenticationResponseDTO result = authenticationService.login(dto);
         if (result.valid) {
             return ResponseEntity.ok(result);
         } else {
@@ -31,8 +31,9 @@ public class AuthenticationController {
         }
     }
 
+    @PreAuthorize(Authority.USER)
     @RequestMapping(value = "/ping", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<?> ping(){
+    public ResponseEntity<ResultMessageDTO> checkIfAuthorized(){
         ResultMessageDTO dto = new ResultMessageDTO();
         dto.messages.add("PONG");
         return ResponseEntity.ok(dto);

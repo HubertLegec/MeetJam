@@ -4,7 +4,6 @@ import com.pik.base.IntegrationSpec
 import com.pik.model.dto.AccountDTO
 import com.pik.repository.AccountRepository
 import org.springframework.beans.factory.annotation.Autowired
-import spock.lang.Ignore
 import spock.lang.Shared
 
 class AccountControllerSpec extends IntegrationSpec {
@@ -17,8 +16,9 @@ class AccountControllerSpec extends IntegrationSpec {
     @Shared protected static final String password = '!6adfKrpu';
     @Shared protected static final String email = 'test@gmail.com'
 
-    def "account should have been sent in database"()
-    {
+    def "registration should create account in database"() {
+        given: "there is no user with login in database"
+        accountRepository.findByLogin(login) == null
         when:
         accountController.registerNewAccount(new AccountDTO(login: login, password: password, email: email))
 
@@ -27,7 +27,6 @@ class AccountControllerSpec extends IntegrationSpec {
 
         cleanup:
         accountRepository.deleteByLogin(login)
-
     }
 
 }

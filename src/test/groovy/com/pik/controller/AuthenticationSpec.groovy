@@ -4,14 +4,13 @@ import com.pik.base.MvcIntegrationSpec
 import com.pik.model.dto.AuthenticationResponseDTO
 import com.pik.model.dto.ResultMessageDTO
 import org.springframework.http.MediaType
-import spock.lang.Ignore
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class AuthenticationControllerIntegrSpec extends MvcIntegrationSpec{
+class AuthenticationSpec extends MvcIntegrationSpec{
 
     public static final String LOGIN_URL = '/auth/login'
     public static final String PING_URL = '/ping'
@@ -34,7 +33,6 @@ class AuthenticationControllerIntegrSpec extends MvcIntegrationSpec{
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 
-        responseDTO.messages.size() == 0
         responseDTO.token != null
         responseDTO.token.size() > 0
 
@@ -47,7 +45,7 @@ class AuthenticationControllerIntegrSpec extends MvcIntegrationSpec{
         response2DTO.messages.first() == 'PONG'
     }
 
-    def 'login fails when user not exist in database'(){
+    def 'login fails when user does not exist in database'(){
         when:
         def response = mockMvc.perform(post(LOGIN_URL)
                 .contentType(MediaType.APPLICATION_JSON)

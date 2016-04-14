@@ -14,7 +14,6 @@ import java.io.IOException;
 public class StatelessAuthenticationFilter extends GenericFilterBean {
     private final TokenAuthenticationService tokenAuthenticationService;
 
-
     public StatelessAuthenticationFilter(TokenAuthenticationService authenticationService){
         this.tokenAuthenticationService = authenticationService;
     }

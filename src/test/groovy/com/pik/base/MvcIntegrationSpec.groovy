@@ -15,7 +15,6 @@ import spock.lang.Shared;
 @WebAppConfiguration
 @Ignore
 class MvcIntegrationSpec extends IntegrationSpec {
-
     @Autowired
     protected WebApplicationContext webApplicationContext
 
@@ -24,12 +23,10 @@ class MvcIntegrationSpec extends IntegrationSpec {
     @Shared
     protected ObjectMapper mapper = new ObjectMapper()
 
-
     void setup() {
         ConfigurableMockMvcBuilder mockMvcBuilder = MockMvcBuilders.webAppContextSetup(webApplicationContext)
         mockMvc = mockMvcBuilder.build()
     }
-
 }
 
 

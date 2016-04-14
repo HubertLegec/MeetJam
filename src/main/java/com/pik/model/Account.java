@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Document
-public class Account implements UserDetails{
+public class Account implements UserDetails {
     @Id
     private BigInteger id;
     private String login;

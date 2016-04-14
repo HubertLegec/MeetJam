@@ -17,8 +17,6 @@ class CustomPasswordValidatorSpec extends Specification {
             boolean result = validator.validatePassword(password)
         then:
             result == false
-            validator.getLastPasswordIssues() != null
-            validator.getLastPasswordIssues().size() > 0
     }
 
     def 'validation of password with number sequence should return false'() {
@@ -28,8 +26,6 @@ class CustomPasswordValidatorSpec extends Specification {
             boolean result = validator.validatePassword(password)
         then:
             result == false
-            validator.getLastPasswordIssues() != null
-            validator.getLastPasswordIssues().size() > 0
     }
 
     def 'validation of password with qwerty sequence should return false'(){

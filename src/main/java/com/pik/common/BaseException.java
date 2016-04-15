@@ -1,4 +1,4 @@
-package com.pik.model.exception;
+package com.pik.common;
 
 import java.util.List;
 

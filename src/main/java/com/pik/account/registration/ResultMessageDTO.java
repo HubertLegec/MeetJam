@@ -1,4 +1,4 @@
-package com.pik.model.dto;
+package com.pik.account.registration;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.pik.model.errors;
+package com.pik.account.registration;
 
 public enum InvalidRegisterParameterError {
     DUPLICATE_LOGIN(0,"User with given login already exists!"),

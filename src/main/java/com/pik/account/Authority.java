@@ -1,4 +1,4 @@
-package com.pik.model;
+package com.pik.account;
 
 import org.springframework.security.core.GrantedAuthority;
 

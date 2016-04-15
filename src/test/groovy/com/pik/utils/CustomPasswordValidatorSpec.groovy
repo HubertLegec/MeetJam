@@ -10,43 +10,15 @@ class CustomPasswordValidatorSpec extends Specification {
         validator = new CustomPasswordValidator()
     }
 
-    def 'validation of empty password string should fail'() {
-        given:
-            String password = ''
-        when:
-            boolean result = validator.validatePassword(password)
-        then:
-            result == false
-    }
+    def 'password variants validation'(String password, boolean result) {
+        expect:
+            validator.validatePassword(password) == result
+        where:
+            password      | result
+            ''            | false
+            '!Abcdef123'  | false
+            'qwerty!2Avd' | false
+            'A1b4ls!^sad' | true
 
-    def 'validation of password with number sequence should return false'() {
-        given:
-            String password = '!Abcdef123'
-        when:
-            boolean result = validator.validatePassword(password)
-        then:
-            result == false
-    }
-
-    def 'validation of password with qwerty sequence should return false'(){
-        given:
-            String password = 'qwerty!2Avd'
-        when:
-            boolean result = validator.validatePassword(password)
-        then:
-            result == false
-            validator.getLastPasswordIssues() != null
-            validator.getLastPasswordIssues().size() > 0
-    }
-
-    def 'validation of valid password should return true'(){
-        given:
-        String password = 'A1b4ls!^sad'
-        when:
-        boolean result = validator.validatePassword(password)
-        then:
-        result == true
-        validator.getLastPasswordIssues() != null
-        validator.getLastPasswordIssues().size() == 0
     }
 }

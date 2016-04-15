@@ -1,16 +1,16 @@
-package com.pik.model.exception;
+package com.pik.account.registration;
 
-import com.pik.model.errors.InvalidRegisterParameterError;
+import com.pik.common.BaseException;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
-public class InvalidRegisterParametersException extends BaseException{
+class InvalidRegisterParametersException extends BaseException {
     List<InvalidRegisterParameterError> errors;
     List<String> passwordIssues;
 
-    public InvalidRegisterParametersException(List<InvalidRegisterParameterError> errors, List<String> passwordIssues) {
+    InvalidRegisterParametersException(List<InvalidRegisterParameterError> errors, List<String> passwordIssues) {
         this.errors = errors;
         this.passwordIssues = passwordIssues;
     }

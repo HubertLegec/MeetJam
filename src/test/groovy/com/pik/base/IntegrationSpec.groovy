@@ -1,8 +1,8 @@
 package com.pik.base
 
 import com.pik.MeetJamApplication
-import com.pik.model.Account
-import com.pik.repository.AccountRepository
+import com.pik.account.Account
+import com.pik.account.AccountRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

@@ -1,9 +1,11 @@
-package com.pik.model.dto;
+package com.pik.account.registration;
 
-public class AuthenticationRequestDTO {
+
+public class AccountDTO {
+
     private String login;
+    private String email;
     private String password;
-
 
     public String getLogin() {
         return login;
@@ -11,6 +13,14 @@ public class AuthenticationRequestDTO {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

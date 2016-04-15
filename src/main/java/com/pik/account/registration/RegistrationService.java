@@ -1,13 +1,9 @@
-package com.pik.service;
+package com.pik.account.registration;
 
-import com.pik.model.Account;
-import com.pik.model.dto.AccountDTO;
-import com.pik.model.errors.InvalidRegisterParameterError;
-import com.pik.model.exception.InvalidRegisterParametersException;
-import com.pik.repository.AccountRepository;
+import com.pik.account.Account;
+import com.pik.account.AccountRepository;
 import com.pik.utils.CustomPasswordValidator;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
@@ -15,12 +11,12 @@ import java.util.List;
 
 
 
-public class AccountService {
+public class RegistrationService {
     private AccountRepository accountRepository;
     private CustomPasswordValidator passwordValidator = new CustomPasswordValidator();
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public AccountService(AccountRepository accountRepository) {
+    public RegistrationService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 

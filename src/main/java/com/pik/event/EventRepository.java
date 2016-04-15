@@ -1,7 +1,6 @@
-package com.pik.repository;
+package com.pik.event;
 
 
-import com.pik.model.MusicEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.math.BigInteger;

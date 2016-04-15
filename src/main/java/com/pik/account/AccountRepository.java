@@ -1,6 +1,5 @@
-package com.pik.repository;
+package com.pik.account;
 
-import com.pik.model.Account;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.math.BigInteger;

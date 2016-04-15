@@ -1,4 +1,4 @@
-package com.pik.model;
+package com.pik.event;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

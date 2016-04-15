@@ -1,7 +1,7 @@
 package com.pik.security;
 
-import com.pik.model.Account;
-import com.pik.repository.AccountRepository;
+import com.pik.account.Account;
+import com.pik.account.AccountRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

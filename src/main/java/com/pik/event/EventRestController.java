@@ -1,4 +1,4 @@
-package com.pik.controller;
+package com.pik.event;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

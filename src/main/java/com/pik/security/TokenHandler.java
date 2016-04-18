@@ -5,6 +5,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public final class TokenHandler {
 
@@ -16,7 +17,7 @@ public final class TokenHandler {
         this.userService = userService;
     }
 
-    public User parseUserFromToken(String token) {
+    public User parseUserFromToken(String token) throws UsernameNotFoundException {
         String username = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)

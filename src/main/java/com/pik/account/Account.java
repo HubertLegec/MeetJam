@@ -1,5 +1,6 @@
 package com.pik.account;
 
+import com.pik.account.details.AccountDetails;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,8 +19,10 @@ public class Account implements UserDetails {
     private String password;
     private String email;
     private List<Authority> authorities = new ArrayList<>();
+    private AccountDetails details;
 
     public Account(String login, String password, String email) {
+        this.details = new AccountDetails();
         this.login = login;
         this.password = password;
         this.email = email;

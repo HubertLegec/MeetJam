@@ -1,5 +1,6 @@
 package com.pik.event;
 
+import com.pik.common.InstrumentType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +20,7 @@ public class MusicEvent {
     private String city;
     private LocalDateTime date;
     private List<String> participants = new ArrayList<>();
+    private List<InstrumentType> instrumentsNeeded = new ArrayList<>();
 
 
     public MusicEvent(LocalDateTime date, String city, String title, String owner) {
@@ -69,7 +71,15 @@ public class MusicEvent {
     }
 
     public void addParticipant(String login){
-        participants.add(login);
+        if(!participants.contains(login)) {
+            participants.add(login);
+        }
+    }
+
+    public void addNeededInstrument(InstrumentType instrument){
+        if(!instrumentsNeeded.contains(instrument)){
+            instrumentsNeeded.add(instrument);
+        }
     }
 
     public List<String> getParticipants(){

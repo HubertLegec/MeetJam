@@ -1,6 +1,7 @@
 package com.pik.event.acceptance
 
 import com.pik.base.MvcIntegrationSpec
+import com.pik.common.InstrumentType
 import com.pik.event.EventRepository
 import com.pik.event.MusicEvent
 import groovy.json.JsonSlurper
@@ -11,6 +12,7 @@ import spock.lang.Shared
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+import static com.pik.common.InstrumentType.*
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -19,6 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class EventListSpec extends MvcIntegrationSpec {
     private static final String EVENT_LIST_URL = '/api/event/list'
     private static final String MY_EVENT_LIST_URL = '/api/event/myList'
+    private static final String JOINED_LIST_URL = '/api/event/joinedList'
+    private static final String BY_INSTRUMENT_LIST_URL = '/api/event/byInstrumentList'
     @Shared String token
     @Autowired
     private EventRepository eventRepository
@@ -27,6 +31,17 @@ class EventListSpec extends MvcIntegrationSpec {
             new MusicEvent(LocalDateTime.of(2016, 2, 10, 0, 0), 'Warsaw', 'First event', 'Zosia'),
             new MusicEvent(LocalDateTime.of(2016, 3, 10, 0, 0), 'Warsaw', 'Second event', 'Adam')
     ]
+
+    static {
+        SAMPLE_EVENTS[0].addParticipant('Adam')
+        SAMPLE_EVENTS[0].addParticipant('Jan')
+        SAMPLE_EVENTS[0].addParticipant('Kuba')
+        SAMPLE_EVENTS[0].addNeededInstrument(KEYBOARD)
+        SAMPLE_EVENTS[1].addParticipant('Zosia')
+        SAMPLE_EVENTS[1].addParticipant('Wojtek')
+        SAMPLE_EVENTS[1].addNeededInstrument(GUITAR)
+        SAMPLE_EVENTS[1].addNeededInstrument(PIANO)
+    }
 
     def setup(){
         insertSampleEventsToDatabase()
@@ -68,11 +83,29 @@ class EventListSpec extends MvcIntegrationSpec {
     }
 
     def 'should return list of events which specified user joined'(){
-        //TODO
+        given: 'one event in database Zosia joined'
+            eventRepository.findByParticipantsIn('Adam').size() == 1
+            def dateFrom = LocalDateTime.of(2016, 02, 20, 0, 0)
+            def dateTo = LocalDateTime.of(2016, 03, 20, 0, 0)
+        when: 'Zosia requested list of events she had joined'
+            def response = sendEventListUserJoinedRequest(token, dateFrom, dateTo)
+        then: 'result list contains one event she joined'
+            response.andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON))
+        isCorrectEventList(response, SAMPLE_EVENTS.subList(1, 2))
     }
 
     def 'should return list of events in which is need for specified instrument player'(){
-        //TODO
+        given: 'one event in database in which guitar is needed'
+            eventRepository.findByInstrumentsNeededIn(GUITAR).size() == 1
+            def dateFrom = LocalDateTime.of(2016, 02, 20, 0, 0)
+            def dateTo = LocalDateTime.of(2016, 03, 20, 0, 0)
+        when:
+            def response = sendEventListByInstrumentRequest(GUITAR, dateFrom, dateTo)
+        then:
+            response.andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON))
+            isCorrectEventList(response, SAMPLE_EVENTS.subList(1, 2))
     }
 
     private def sendEventListByCityRequest(String token, String city, LocalDateTime dateFrom, LocalDateTime dateTo){
@@ -93,9 +126,18 @@ class EventListSpec extends MvcIntegrationSpec {
     }
 
     private def sendEventListUserJoinedRequest(String token, LocalDateTime dateFrom, LocalDateTime dateTo){
-        mockMvc.perform(get(EVENT_LIST_URL)
+        mockMvc.perform(get(JOINED_LIST_URL)
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
+                .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
+                .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
+    }
+
+    private def sendEventListByInstrumentRequest(InstrumentType instrument, LocalDateTime dateFrom, LocalDateTime dateTo){
+        mockMvc.perform(get(BY_INSTRUMENT_LIST_URL)
+                .contentType(APPLICATION_JSON)
+                .header(AUTH_HEADER_NAME, token)
+                .param('instrument', instrument.getName())
                 .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
                 .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
     }

@@ -1,5 +1,7 @@
 package com.pik.account.details;
 
+import com.pik.common.InstrumentType;
+
 import java.util.ArrayList;
 import java.util.List;
 

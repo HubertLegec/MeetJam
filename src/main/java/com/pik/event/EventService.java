@@ -1,6 +1,7 @@
 package com.pik.event;
 
 
+import com.pik.common.InstrumentType;
 import com.pik.security.TokenHandler;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -23,13 +24,8 @@ public class EventService {
     public List<EventDTO> fetchEventsByCity(String city, String dateFrom, String dateTo){
         LocalDateTime parsedFrom = parseDateTime(dateFrom);
         LocalDateTime parsedTo = parseDateTime(dateTo);
-        //TODO
-        return getMockedEventList()
-                .stream()
-                .filter( it ->
-                        it.getCity().equals(city)
-                        && dateBetween(parsedFrom, parsedTo, it.getConvertedDate()))
-                .collect(toList());
+        List<MusicEvent> eventsByCity = eventRepository.findByCity(city);
+        return filterEventsByDateAndTransformToDTO(eventsByCity, parsedFrom, parsedTo);
     }
 
     public List<EventDTO> fetchEventListByOwner(String token, String dateFrom, String dateTo){
@@ -39,34 +35,31 @@ public class EventService {
         if(owner == null){
             return new ArrayList<>();
         }
-        //TODO
-        return getMockedEventList()
-                .stream()
-                .filter( it ->
-                        it.getOwner().equals(owner)
-                                && dateBetween(parsedFrom, parsedTo, it.getConvertedDate()))
-                .collect(toList());
+        List<MusicEvent> ownerEvents = eventRepository.findByOwner(owner);
+        return filterEventsByDateAndTransformToDTO(ownerEvents, parsedFrom, parsedTo);
     }
 
     public List<EventDTO> fetchJoinedEventList(String token, String dateFrom, String dateTo){
-        //TODO
-        return new ArrayList<>();
+        LocalDateTime parsedFrom = parseDateTime(dateFrom);
+        LocalDateTime parsedTo = parseDateTime(dateTo);
+        String participant = getLoginFromToken(token);
+        if(participant == null){
+            return new ArrayList<>();
+        }
+        List<MusicEvent> userEvents = eventRepository.findByParticipantsIn(participant);
+        return filterEventsByDateAndTransformToDTO(userEvents, parsedFrom, parsedTo);
     }
 
     public List<EventDTO> fetchEventListByInstrumentNeeded(String instrument, String dateFrom, String dateTo){
-        //TODO
-        return new ArrayList<>();
+        LocalDateTime parsedFrom = parseDateTime(dateFrom);
+        LocalDateTime parsedTo = parseDateTime(dateTo);
+        InstrumentType instrumentType = InstrumentType.fromString(instrument);
+        if(instrument == null){
+            return new ArrayList<>();
+        }
+        List<MusicEvent> eventsByInstrument = eventRepository.findByInstrumentsNeededIn(instrumentType);
+        return filterEventsByDateAndTransformToDTO(eventsByInstrument, parsedFrom, parsedTo);
     }
-
-
-    private List<EventDTO> getMockedEventList(){
-        List<EventDTO> mockedList = new ArrayList<>();
-        mockedList.add(new EventDTO("Zosia", "First event", "Warsaw", LocalDateTime.of(2016, 2, 10, 0, 0)));
-        mockedList.add(new EventDTO("Adam", "Second event", "Warsaw", LocalDateTime.of(2016, 3, 10, 0, 0)));
-
-        return mockedList;
-    }
-
 
     private LocalDateTime parseDateTime(String value){
         if(value == null){
@@ -98,5 +91,13 @@ public class EventService {
         } catch (UsernameNotFoundException e){
             return null;
         }
+    }
+
+    private List<EventDTO> filterEventsByDateAndTransformToDTO(List<MusicEvent> events, LocalDateTime dateFrom, LocalDateTime dateTo){
+        return events
+                .stream()
+                .filter( it -> dateBetween(dateFrom, dateTo, it.getDate()))
+                .map( it -> new EventDTO(it))
+                .collect(toList());
     }
 }

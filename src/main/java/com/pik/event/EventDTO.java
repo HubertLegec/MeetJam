@@ -21,6 +21,13 @@ public class EventDTO {
         this.date = date.format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
+    public EventDTO(MusicEvent event){
+        this.owner = event.getOwner();
+        this.title = event.getTitle();
+        this.city = event.getCity();
+        this.date = event.getDate().format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
     public String getOwner() {
         return owner;
     }

@@ -21,11 +21,12 @@ public class EventService {
         this.tokenHandler = tokenHandler;
     }
 
-    public List<EventDTO> fetchEventsByCity(String city, String dateFrom, String dateTo){
+    public List<EventDTO> fetchEventsByCityAndInstrumentAndDate(String city, String instrument, String dateFrom, String dateTo){
         LocalDateTime parsedFrom = parseDateTime(dateFrom);
         LocalDateTime parsedTo = parseDateTime(dateTo);
-        List<MusicEvent> eventsByCity = eventRepository.findByCity(city);
-        return filterEventsByDateAndTransformToDTO(eventsByCity, parsedFrom, parsedTo);
+        InstrumentType instrumentNeeded = InstrumentType.fromString(instrument);
+        List<MusicEvent> eventsByCity = eventRepository.findByCityAndInstrumentNeededAndDateBetween(city,instrumentNeeded,parsedFrom,parsedTo);
+        return transformToEventDTOList(eventsByCity);
     }
 
     public List<EventDTO> fetchEventListByOwner(String token, String dateFrom, String dateTo){
@@ -35,8 +36,8 @@ public class EventService {
         if(owner == null){
             return new ArrayList<>();
         }
-        List<MusicEvent> ownerEvents = eventRepository.findByOwner(owner);
-        return filterEventsByDateAndTransformToDTO(ownerEvents, parsedFrom, parsedTo);
+        List<MusicEvent> ownerEvents = eventRepository.findByOwnerAndDateBetween(owner, parsedFrom, parsedTo);
+        return transformToEventDTOList(ownerEvents);
     }
 
     public List<EventDTO> fetchJoinedEventList(String token, String dateFrom, String dateTo){
@@ -46,19 +47,8 @@ public class EventService {
         if(participant == null){
             return new ArrayList<>();
         }
-        List<MusicEvent> userEvents = eventRepository.findByParticipantsIn(participant);
-        return filterEventsByDateAndTransformToDTO(userEvents, parsedFrom, parsedTo);
-    }
-
-    public List<EventDTO> fetchEventListByInstrumentNeeded(String instrument, String dateFrom, String dateTo){
-        LocalDateTime parsedFrom = parseDateTime(dateFrom);
-        LocalDateTime parsedTo = parseDateTime(dateTo);
-        InstrumentType instrumentType = InstrumentType.fromString(instrument);
-        if(instrument == null){
-            return new ArrayList<>();
-        }
-        List<MusicEvent> eventsByInstrument = eventRepository.findByInstrumentsNeededIn(instrumentType);
-        return filterEventsByDateAndTransformToDTO(eventsByInstrument, parsedFrom, parsedTo);
+        List<MusicEvent> userEvents = eventRepository.findByParticipantsInAndDateBetween(participant,parsedFrom,parsedTo);
+        return transformToEventDTOList(userEvents);
     }
 
     private LocalDateTime parseDateTime(String value){
@@ -73,17 +63,6 @@ public class EventService {
         }
     }
 
-    private boolean dateBetween(LocalDateTime from, LocalDateTime to, LocalDateTime toCheck){
-        if(from == null && to == null){
-            return true;
-        } else if(to == null){
-            return toCheck.isAfter(from);
-        } else if(from == null){
-            return toCheck.isBefore(to);
-        }
-        return toCheck.isAfter(from) && toCheck.isBefore(to);
-    }
-
     private String getLoginFromToken(String token){
         try{
             return tokenHandler.parseUserFromToken(token)
@@ -93,10 +72,9 @@ public class EventService {
         }
     }
 
-    private List<EventDTO> filterEventsByDateAndTransformToDTO(List<MusicEvent> events, LocalDateTime dateFrom, LocalDateTime dateTo){
+    private List<EventDTO> transformToEventDTOList(List<MusicEvent> events){
         return events
                 .stream()
-                .filter( it -> dateBetween(dateFrom, dateTo, it.getDate()))
                 .map( it -> new EventDTO(it))
                 .collect(toList());
     }

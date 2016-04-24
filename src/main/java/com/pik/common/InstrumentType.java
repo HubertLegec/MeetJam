@@ -3,7 +3,9 @@ package com.pik.common;
 public enum InstrumentType {
     GUITAR("Guitar"),
     PIANO("Piano"),
-    KEYBOARD("Keyboard");
+    KEYBOARD("Keyboard"),
+    DRUMS("Drums"),
+    BASS_GUITAR("Bass guitar");
 
     private String name;
 

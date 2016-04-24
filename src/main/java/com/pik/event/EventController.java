@@ -26,10 +26,11 @@ public class EventController {
     }
 
     @RequestMapping(value = "list", produces = APPLICATION_JSON_VALUE, method = GET)
-    public ResponseEntity<List<EventDTO>> eventListByCityAndDate(@RequestParam String city,
-                                                                 @RequestParam String dateFrom,
-                                                                 @RequestParam String dateTo){
-        List<EventDTO> result = eventService.fetchEventsByCity(city, dateFrom, dateTo);
+    public ResponseEntity<List<EventDTO>> eventListByCityAndDate(@RequestParam(required = false) String city,
+                                                                 @RequestParam(required = false) String instrument,
+                                                                 @RequestParam(required = false) String dateFrom,
+                                                                 @RequestParam(required = false) String dateTo){
+        List<EventDTO> result = eventService.fetchEventsByCityAndInstrumentAndDate(city, instrument, dateFrom, dateTo);
         return ResponseEntity
                 .status(getResponseStatus(result))
                 .body(result);
@@ -55,15 +56,6 @@ public class EventController {
                 .body(result);
     }
 
-    @RequestMapping(value = "byInstrumentList", produces = APPLICATION_JSON_VALUE, method = GET)
-    public ResponseEntity<List<EventDTO>> eventListByInstrumentNeeded(@RequestParam String instrument,
-                                                                      @RequestParam String dateFrom,
-                                                                      @RequestParam String dateTo){
-        List<EventDTO> result = eventService.fetchEventListByInstrumentNeeded(instrument, dateFrom, dateTo);
-        return ResponseEntity
-                .status(getResponseStatus(result))
-                .body(result);
-    }
 
     private HttpStatus getResponseStatus(List<EventDTO> result){
         if(result.size() > 0){

@@ -22,7 +22,6 @@ class EventListSpec extends MvcIntegrationSpec {
     private static final String EVENT_LIST_URL = '/api/event/list'
     private static final String MY_EVENT_LIST_URL = '/api/event/myList'
     private static final String JOINED_LIST_URL = '/api/event/joinedList'
-    private static final String BY_INSTRUMENT_LIST_URL = '/api/event/byInstrumentList'
     @Shared String token
     @Autowired
     private EventRepository eventRepository
@@ -134,7 +133,7 @@ class EventListSpec extends MvcIntegrationSpec {
     }
 
     private def sendEventListByInstrumentRequest(InstrumentType instrument, LocalDateTime dateFrom, LocalDateTime dateTo){
-        mockMvc.perform(get(BY_INSTRUMENT_LIST_URL)
+        mockMvc.perform(get(EVENT_LIST_URL)
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
                 .param('instrument', instrument.getName())

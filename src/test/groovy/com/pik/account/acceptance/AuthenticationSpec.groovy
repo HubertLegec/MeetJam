@@ -7,6 +7,7 @@ import org.springframework.test.web.servlet.ResultActions
 import static com.pik.account.authentication.InvalidLoginParametersError.INVALID_PASSWORD
 import static com.pik.account.authentication.InvalidLoginParametersError.NON_EXISTING_LOGIN
 import static org.springframework.http.MediaType.APPLICATION_JSON
+import static org.springframework.http.MediaType.TEXT_PLAIN
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -41,7 +42,7 @@ class AuthenticationSpec extends MvcIntegrationSpec{
         then: 'http status ok returned'
             response
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(content().contentType(TEXT_PLAIN))
     }
 
     def 'login fails when user does not exist in database'(){

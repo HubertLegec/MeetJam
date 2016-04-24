@@ -3,6 +3,7 @@ package com.pik.configuration;
 import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
+import com.pik.security.TokenAuthenticationService;
 import com.pik.security.TokenHandler;
 import com.pik.security.UserDetailsStorageService;
 import com.pik.account.authentication.AuthenticationService;
@@ -18,11 +19,6 @@ public class AppConfig {
     @Bean
     LoggingService loggingService(){
         return new LoggingService();
-    }
-
-    @Bean
-    TokenHandler tokenHandler(UserDetailsStorageService userDetailsService){
-        return new TokenHandler("meetJam", userDetailsService);
     }
 
     @Bean
@@ -42,5 +38,14 @@ public class AppConfig {
         return new AuthenticationService(accountRepository, authenticationManager, tokenHandler);
     }
 
+    @Bean
+    TokenHandler tokenHandler(UserDetailsStorageService userDetailsService){
+        return new TokenHandler("meetJam", userDetailsService);
+    }
+
+    @Bean
+    public TokenAuthenticationService tokenAuthenticationService(TokenHandler tokenHandler){
+        return new TokenAuthenticationService(tokenHandler);
+    }
 
 }

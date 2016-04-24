@@ -2,8 +2,6 @@ package com.pik.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -12,8 +10,8 @@ public class TokenAuthenticationService {
 
     private final TokenHandler tokenHandler;
 
-    public TokenAuthenticationService(String secret, UserDetailsService userDetailsService) {
-        tokenHandler = new TokenHandler(secret, userDetailsService);
+    public TokenAuthenticationService(TokenHandler tokenHandler) {
+        this.tokenHandler = tokenHandler;
     }
 
     Authentication getAuthentication(HttpServletRequest request) {

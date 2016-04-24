@@ -3,6 +3,7 @@ package com.pik.configuration;
 import com.pik.security.CORSFilter;
 import com.pik.security.StatelessAuthenticationFilter;
 import com.pik.security.TokenAuthenticationService;
+import com.pik.security.TokenHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,12 +30,12 @@ import javax.annotation.Resource;
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Resource
     private CORSFilter corsFilter;
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
-
-    private final TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService("meetJam", userDetailsService);
+    @Resource
+    private TokenAuthenticationService tokenAuthenticationService;
 
     public ApplicationSecurity() {
         super(true);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -37,7 +38,7 @@ public class AuthenticationController {
     }
 
     @PreAuthorize(Authority.USER)
-    @RequestMapping(value = "/ping", produces = APPLICATION_JSON_VALUE, method = GET)
+    @RequestMapping(value = "/ping", produces = TEXT_PLAIN_VALUE, method = GET)
     public ResponseEntity<String> checkIfAuthorized(){
         return ResponseEntity.ok("PONG");
     }

@@ -1,4 +1,4 @@
-package com.pik.utils
+package com.pik.account.utils
 
 import spock.lang.Shared
 import spock.lang.Specification

@@ -4,6 +4,8 @@ import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
 import com.pik.security.TokenAuthenticationService;
+import com.pik.event.EventRepository;
+import com.pik.event.EventService;
 import com.pik.security.TokenHandler;
 import com.pik.security.UserDetailsStorageService;
 import com.pik.account.authentication.AuthenticationService;
@@ -29,6 +31,11 @@ public class AppConfig {
     @Bean
     RegistrationService accountService(AccountRepository accountRepository){
         return new RegistrationService(accountRepository);
+    }
+
+    @Bean
+    EventService eventService(EventRepository eventRepository, TokenHandler tokenHandler){
+        return new EventService(eventRepository, tokenHandler);
     }
 
     @Bean

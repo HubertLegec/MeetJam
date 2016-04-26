@@ -9,15 +9,13 @@ import static com.pik.account.authentication.InvalidLoginParametersError.NON_EXI
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.http.MediaType.TEXT_PLAIN
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class AuthenticationSpec extends MvcIntegrationSpec{
 
-    public static final String LOGIN_URL = '/auth/login'
     public static final String PING_URL = '/ping'
-    private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+
 
     def 'login with valid credentials should be successful'(){
         given: 'account in database'
@@ -72,18 +70,6 @@ class AuthenticationSpec extends MvcIntegrationSpec{
     private static boolean responseContainsToken(String response){
         def token = extractTokenFromResponse(response)
         return token != null && token.size() > 0
-    }
-
-    private static String extractTokenFromResponse(String response){
-        def jsonResult = new JsonSlurper().parseText(response)
-        return jsonResult.token
-    }
-
-    private def sendLoginRequest(String login, String password){
-        return mockMvc.perform(post(LOGIN_URL)
-                .contentType(APPLICATION_JSON)
-                .param('login', login)
-                .param('password', password))
     }
 
     private List<String> getMessages(ResultActions resultActions) {

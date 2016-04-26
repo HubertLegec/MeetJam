@@ -2,7 +2,7 @@ package com.pik.account.registration;
 
 import com.pik.account.Account;
 import com.pik.account.AccountRepository;
-import com.pik.utils.CustomPasswordValidator;
+import com.pik.account.utils.CustomPasswordValidator;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

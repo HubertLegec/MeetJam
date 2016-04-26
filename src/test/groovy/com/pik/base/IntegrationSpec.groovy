@@ -13,7 +13,7 @@ import spock.lang.Specification
 @SpringApplicationConfiguration(classes = MeetJamApplication)
 @Ignore
 class IntegrationSpec extends Specification {
-    private static List<Account> testAccounts = [
+    protected static List<Account> testAccounts = [
             new Account('Adam', 'adam123', 'adam@gmail.com'),
             new Account('Zosia', 'zosia123', 'zosia@gmail.com')
     ]

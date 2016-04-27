@@ -22,6 +22,8 @@ class EventListSpec extends MvcIntegrationSpec {
     private static final String EVENT_LIST_URL = '/api/event/list'
     private static final String MY_EVENT_LIST_URL = '/api/event/myList'
     private static final String JOINED_LIST_URL = '/api/event/joinedList'
+    private static final String INSTRUMENT_LIST_URL = '/api/event/availableInstruments'
+
     @Shared String token
     @Autowired
     private EventRepository eventRepository
@@ -99,12 +101,21 @@ class EventListSpec extends MvcIntegrationSpec {
             eventRepository.findByInstrumentsNeededIn(GUITAR).size() == 1
             def dateFrom = LocalDateTime.of(2016, 02, 20, 0, 0)
             def dateTo = LocalDateTime.of(2016, 03, 20, 0, 0)
-        when:
+        when: 'Zosia requested list of events in which guitar is needed'
             def response = sendEventListByInstrumentRequest(GUITAR, dateFrom, dateTo)
-        then:
+        then: 'result list contains such event'
             response.andExpect(status().isOk())
                     .andExpect(content().contentType(APPLICATION_JSON))
             isCorrectEventList(response, SAMPLE_EVENTS.subList(1, 2))
+    }
+
+    def 'should return list of names of instruments which can take part in meetjam'(){
+        when:
+            def response = sendInstrumentListRequest()
+        then:
+            response.andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON))
+            isCorrectInstrumentList(response)
     }
 
     private def sendEventListByCityRequest(String token, String city, LocalDateTime dateFrom, LocalDateTime dateTo){
@@ -141,14 +152,24 @@ class EventListSpec extends MvcIntegrationSpec {
                 .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
     }
 
+    private def sendInstrumentListRequest(){
+        mockMvc.perform(get(INSTRUMENT_LIST_URL)
+                .contentType(APPLICATION_JSON)
+                .header(AUTH_HEADER_NAME, token))
+    }
+
     private def insertSampleEventsToDatabase(){
         SAMPLE_EVENTS.each {
             eventRepository.save(it)
         }
     }
 
-    private def isCorrectEventList(ResultActions response, List<MusicEvent> list){
-        def jsonResult = new JsonSlurper().parseText(response.andReturn().response.contentAsString)
+    private boolean isCorrectEventList(ResultActions response, List<MusicEvent> list){
+        def jsonResult = new JsonSlurper()
+                .parseText(response
+                            .andReturn()
+                            .response
+                            .contentAsString)
         for(int i = 0; i < list.size(); i++){
             if(!eventsEqual(jsonResult[i], list[i])){
                 return false
@@ -169,6 +190,20 @@ class EventListSpec extends MvcIntegrationSpec {
         }
         if(!event.date.isEqual(LocalDateTime.parse(fromJson.date))){
             return false
+        }
+        return true
+    }
+
+    private boolean isCorrectInstrumentList(ResultActions response){
+        def jsonResult = new JsonSlurper()
+                .parseText(response
+                            .andReturn()
+                            .response
+                            .contentAsString)
+        InstrumentType.values().each {
+            if (!jsonResult.asType(List.class).contains(it.name)) {
+                return false
+            }
         }
         return true
     }

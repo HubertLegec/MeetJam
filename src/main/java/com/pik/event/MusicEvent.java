@@ -82,6 +82,10 @@ public class MusicEvent {
         }
     }
 
+    public List<InstrumentType> getInstrumentsNeeded() {
+        return instrumentsNeeded;
+    }
+
     public List<String> getParticipants(){
         return participants;
     }

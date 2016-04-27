@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public final class TokenHandler {
+public class TokenHandler {
 
     private final String secret;
     private final UserDetailsService userService;

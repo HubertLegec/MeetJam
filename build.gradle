@@ -50,6 +50,8 @@ dependencies {
 	testCompile ("org.spockframework:spock-core:1.0-groovy-2.4")
 	testCompile ('com.fasterxml.jackson.core:jackson-databind:2.0.1')
     testRuntime("org.spockframework:spock-spring:1.0-groovy-2.4")
+	testCompile ('cglib:cglib-nodep:2.2')       // For mocking classes
+	testCompile ('org.objenesis:objenesis:1.2') // For mocking final classes
 }
 
 task wrapper(type: Wrapper) {

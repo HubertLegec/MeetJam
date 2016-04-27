@@ -1,6 +1,7 @@
 package com.pik.event;
 
 
+import com.pik.common.InstrumentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -54,6 +57,14 @@ public class EventController {
         return ResponseEntity
                 .status(getResponseStatus(result))
                 .body(result);
+    }
+
+    @RequestMapping(value = "availableInstruments", produces = APPLICATION_JSON_VALUE, method = GET)
+    public ResponseEntity<List<String>> getAvailableInstruments(){
+        List<String> instrumentNames = Arrays.asList(InstrumentType.values())
+                .stream()
+                .map(InstrumentType::getName).collect(toList());
+        return ResponseEntity.ok(instrumentNames);
     }
 
 

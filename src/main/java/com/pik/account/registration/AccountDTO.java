@@ -1,6 +1,8 @@
 package com.pik.account.registration;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AccountDTO {
 
     private String login;
@@ -29,5 +31,15 @@ public class AccountDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return "AccountDTO{" +
+                "login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

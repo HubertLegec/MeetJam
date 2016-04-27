@@ -71,4 +71,13 @@ public class Account implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Account{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", authorities=" + authorities +
+                '}';
+    }
 }

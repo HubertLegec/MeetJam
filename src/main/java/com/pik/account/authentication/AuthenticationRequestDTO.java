@@ -1,5 +1,7 @@
 package com.pik.account.authentication;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AuthenticationRequestDTO {
     private String login;
     private String password;
@@ -19,5 +21,14 @@ public class AuthenticationRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return "AuthenticationRequestDTO{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

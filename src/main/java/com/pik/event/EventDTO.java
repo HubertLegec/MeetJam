@@ -48,4 +48,15 @@ public class EventDTO {
     public LocalDateTime getConvertedDate(){
         return LocalDateTime.parse(date);
     }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return "EventDTO{" +
+                "owner='" + owner + '\'' +
+                ", title='" + title + '\'' +
+                ", city='" + city + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

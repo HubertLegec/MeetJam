@@ -89,4 +89,17 @@ public class MusicEvent {
     public List<String> getParticipants(){
         return participants;
     }
+
+    @Override
+    public String toString() {
+        return "MusicEvent{" +
+                "owner='" + owner + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", city='" + city + '\'' +
+                ", date=" + date +
+                ", participants=" + participants +
+                ", instrumentsNeeded=" + instrumentsNeeded +
+                '}';
+    }
 }

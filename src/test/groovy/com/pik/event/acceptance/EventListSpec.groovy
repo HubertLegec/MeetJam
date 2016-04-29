@@ -13,6 +13,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 import static com.pik.common.InstrumentType.*
+import static java.time.format.DateTimeFormatter.*
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -24,7 +25,7 @@ class EventListSpec extends MvcIntegrationSpec {
     private static final String JOINED_LIST_URL = '/api/event/joinedList'
     private static final String INSTRUMENT_LIST_URL = '/api/event/availableInstruments'
 
-    @Shared String token
+    @Shared private String token
     @Autowired
     private EventRepository eventRepository
 
@@ -123,24 +124,24 @@ class EventListSpec extends MvcIntegrationSpec {
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
                 .param('city', city)
-                .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
-                .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
+                .param('dateFrom', dateFrom.format(ISO_DATE_TIME))
+                .param('dateTo', dateTo.format(ISO_DATE_TIME)))
     }
 
     private def sendEventListByOwnerRequest(String token, LocalDateTime dateFrom, LocalDateTime dateTo){
         mockMvc.perform(get(MY_EVENT_LIST_URL)
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
-                .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
-                .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
+                .param('dateFrom', dateFrom.format(ISO_DATE_TIME))
+                .param('dateTo', dateTo.format(ISO_DATE_TIME)))
     }
 
     private def sendEventListUserJoinedRequest(String token, LocalDateTime dateFrom, LocalDateTime dateTo){
         mockMvc.perform(get(JOINED_LIST_URL)
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
-                .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
-                .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
+                .param('dateFrom', dateFrom.format(ISO_DATE_TIME))
+                .param('dateTo', dateTo.format(ISO_DATE_TIME)))
     }
 
     private def sendEventListByInstrumentRequest(InstrumentType instrument, LocalDateTime dateFrom, LocalDateTime dateTo){
@@ -148,8 +149,8 @@ class EventListSpec extends MvcIntegrationSpec {
                 .contentType(APPLICATION_JSON)
                 .header(AUTH_HEADER_NAME, token)
                 .param('instrument', instrument.getName())
-                .param('dateFrom', dateFrom.format(DateTimeFormatter.ISO_DATE_TIME))
-                .param('dateTo', dateTo.format(DateTimeFormatter.ISO_DATE_TIME)))
+                .param('dateFrom', dateFrom.format(ISO_DATE_TIME))
+                .param('dateTo', dateTo.format(ISO_DATE_TIME)))
     }
 
     private def sendInstrumentListRequest(){
@@ -164,7 +165,7 @@ class EventListSpec extends MvcIntegrationSpec {
         }
     }
 
-    private boolean isCorrectEventList(ResultActions response, List<MusicEvent> list){
+    private static boolean isCorrectEventList(ResultActions response, List<MusicEvent> list){
         def jsonResult = new JsonSlurper()
                 .parseText(response
                             .andReturn()
@@ -178,7 +179,7 @@ class EventListSpec extends MvcIntegrationSpec {
         return true
     }
 
-    private boolean eventsEqual(def fromJson, MusicEvent event){
+    private static boolean eventsEqual(def fromJson, MusicEvent event){
         if(event.owner != fromJson.owner){
             return false
         }
@@ -194,7 +195,7 @@ class EventListSpec extends MvcIntegrationSpec {
         return true
     }
 
-    private boolean isCorrectInstrumentList(ResultActions response){
+    private static boolean isCorrectInstrumentList(ResultActions response){
         def jsonResult = new JsonSlurper()
                 .parseText(response
                             .andReturn()

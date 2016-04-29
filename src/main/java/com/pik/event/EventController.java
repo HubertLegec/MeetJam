@@ -15,7 +15,9 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
@@ -41,8 +43,8 @@ public class EventController {
 
     @RequestMapping(value = "myList", produces = APPLICATION_JSON_VALUE, method = GET)
     public ResponseEntity<List<EventDTO>> eventListByOwnerAndDate(@RequestHeader(value = "X-AUTH-TOKEN") String token,
-                                                                  @RequestParam String dateFrom,
-                                                                  @RequestParam String dateTo){
+                                                                  @RequestParam(required = false) String dateFrom,
+                                                                  @RequestParam(required = false) String dateTo){
         List<EventDTO> result = eventService.fetchEventListByOwner(token, dateFrom, dateTo);
         return ResponseEntity
                 .status(getResponseStatus(result))
@@ -51,8 +53,8 @@ public class EventController {
 
     @RequestMapping(value = "joinedList", produces = APPLICATION_JSON_VALUE, method = GET)
     public ResponseEntity<List<EventDTO>> eventListUserJoined(@RequestHeader(value = "X-AUTH-TOKEN") String token,
-                                                              @RequestParam String dateFrom,
-                                                              @RequestParam String dateTo){
+                                                              @RequestParam(required = false) String dateFrom,
+                                                              @RequestParam(required = false) String dateTo){
         List<EventDTO> result = eventService.fetchJoinedEventList(token, dateFrom, dateTo);
         return ResponseEntity
                 .status(getResponseStatus(result))
@@ -67,6 +69,18 @@ public class EventController {
         return ResponseEntity.ok(instrumentNames);
     }
 
+    @RequestMapping(value = "create", method = POST, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<CreateEventResultDTO> createEvent(@RequestHeader(value = "X-AUTH-TOKEN") String token,
+                                              @RequestParam String title,
+                                              @RequestParam String city,
+                                              @RequestParam String date){
+        CreateEventResultDTO resultDTO = eventService.createEvent(token, title, city, date);
+        if(resultDTO.getId() != null){
+            return ResponseEntity.status(HttpStatus.CREATED).body(resultDTO);
+        } else{
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(resultDTO);
+        }
+    }
 
     private HttpStatus getResponseStatus(List<EventDTO> result){
         if(result.size() > 0){

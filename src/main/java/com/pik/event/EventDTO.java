@@ -2,10 +2,13 @@ package com.pik.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class EventDTO {
+    private String id;
     private String owner;
     private String title;
     private String city;
@@ -14,18 +17,16 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(String owner, String title, String city, LocalDateTime date) {
-        this.owner = owner;
-        this.title = title;
-        this.city = city;
-        this.date = date.format(DateTimeFormatter.ISO_DATE_TIME);
-    }
-
     public EventDTO(MusicEvent event){
+        this.id = event.getId();
         this.owner = event.getOwner();
         this.title = event.getTitle();
         this.city = event.getCity();
         this.date = event.getDate().format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getOwner() {

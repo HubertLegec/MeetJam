@@ -4,6 +4,7 @@ import com.pik.common.InstrumentType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 @Document
 public class MusicEvent {
     @Id
-    private BigInteger id;
+    private String id;
     private String owner;
     private String title;
     private String description;
@@ -29,6 +30,8 @@ public class MusicEvent {
         this.title = title;
         this.owner = owner;
     }
+
+    public String getId(){ return id; }
 
     public String getCity() {
         return city;

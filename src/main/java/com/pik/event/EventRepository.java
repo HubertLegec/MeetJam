@@ -28,4 +28,5 @@ public interface EventRepository extends MongoRepository<MusicEvent, String> {
                                                                  InstrumentType instrumentNeeded,
                                                                  LocalDateTime dateFrom,
                                                                  LocalDateTime dateTo);
+    MusicEvent findById(String id);
 }

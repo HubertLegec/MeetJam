@@ -12,7 +12,6 @@ public class LoggingService {
     @Around("execution(* com.pik.account..*.*(..)) || execution(* com.pik.event..*.*(..))")
     public Object log(ProceedingJoinPoint jp) throws Throwable{
         StringBuilder toLog = new StringBuilder();
-        log.info(jp.getSignature().getName() + " called...");
         Object[] args=jp.getArgs();
         if(args.length>0){
             toLog.append(jp.getSignature().getName() + " called with parameters:\n\t");

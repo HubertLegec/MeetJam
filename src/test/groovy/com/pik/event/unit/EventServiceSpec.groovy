@@ -7,6 +7,7 @@ import com.pik.event.EventRepository
 import com.pik.event.EventService
 import com.pik.event.EventsError
 import com.pik.event.MusicEvent
+import com.pik.event.RemoveEventException
 import com.pik.security.TokenHandler
 import org.springframework.security.core.userdetails.User
 import spock.lang.Specification
@@ -219,6 +220,40 @@ class EventServiceSpec extends Specification {
             result.messages.contains(EventsError.EMPTY_TITLE_FILED.message)
     }
 
+    def 'execution should finish in normal way if input is correct'(){
+        given: 'event present in database and id is given'
+            eventRepository.findById(_) >> SAMPLE_EVENTS[0]
+            String id = '12345abc'
+            String token = 'wetw3rew'
+        when: 'owner removes event'
+            eventService.removeEvent(token, id)
+        then:
+            final RemoveEventException exception = notThrown()
+    }
+
+    def 'exception should be thrown when user try to remove not existing event'(){
+        given: 'id is given but event is not present in database'
+            eventRepository.findById(_) >> null
+            String id = '12345abc'
+            String token = 'wetw3rew'
+        when:
+            eventService.removeEvent(token, id)
+        then:
+            final RemoveEventException exception = thrown()
+            exception.message == EventsError.EVENT_DOESNT_EXIST.message
+    }
+
+    def 'exception should be thrown when user try to remove not her event'(){
+        given: 'id is given adn sample events present in database'
+        eventRepository.findById(_) >> SAMPLE_EVENTS[1]
+        String id = '12345abc'
+        String token = 'wetw3rew'
+        when:
+        eventService.removeEvent(token, id)
+        then:
+        final RemoveEventException exception = thrown()
+        exception.message == EventsError.NOT_USERS_EVENT.message
+    }
 
 
     private boolean eventAndDTOequals(MusicEvent musicEvent, EventDTO dto){

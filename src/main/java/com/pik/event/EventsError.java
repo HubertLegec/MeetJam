@@ -4,7 +4,10 @@ public enum EventsError {
     INCORRECT_DATE("Incorrect date"),
     EMPTY_CITY_FIELD("City must not be empty"),
     EMPTY_TITLE_FILED("Title must not be empty"),
-    USERNAME_ERROR("Can't recognize user");
+    USERNAME_ERROR("Can't recognize user"),
+    EVENT_ID_ERROR("Event id must not be empty"),
+    EVENT_DOESNT_EXIST("Event doesn't exist"),
+    NOT_USERS_EVENT("This is not your event");
 
     private String message;
 

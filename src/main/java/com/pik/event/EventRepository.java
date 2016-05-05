@@ -5,11 +5,10 @@ import com.pik.common.InstrumentType;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface EventRepository extends MongoRepository<MusicEvent, BigInteger> {
+public interface EventRepository extends MongoRepository<MusicEvent, String> {
 
     @Query("{owner : ?0 , date : { $gte : ?1, $lte : ?2}}")
     List<MusicEvent> findByOwnerAndDateBetween(String owner, LocalDateTime dateFrom, LocalDateTime dateTo);
@@ -28,4 +27,5 @@ public interface EventRepository extends MongoRepository<MusicEvent, BigInteger>
                                                                  InstrumentType instrumentNeeded,
                                                                  LocalDateTime dateFrom,
                                                                  LocalDateTime dateTo);
+    MusicEvent findById(String id);
 }

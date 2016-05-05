@@ -48,7 +48,7 @@ class CreateAndRemoveEventSpec extends MvcIntegrationSpec {
         eventRepository.deleteAll()
     }
 
-    def 'when user create new event it should appear in database'() {
+    def 'when user create new event he should receive http status created'() {
         given: 'logged-in user and event details'
         token != null
         String city = 'Warsaw'
@@ -77,7 +77,7 @@ class CreateAndRemoveEventSpec extends MvcIntegrationSpec {
         createResponseContainsError(response, EventsError.EMPTY_TITLE_FILED.message)
     }
 
-    def 'send remove event request for users event should remove it from database'() {
+    def 'after sending correct request for event removal, user should receive http status ok'() {
         given: 'logged-in user and event in database'
         token != null
         String id = insertSampleEvent(sampleEvent)
@@ -89,7 +89,7 @@ class CreateAndRemoveEventSpec extends MvcIntegrationSpec {
         eventRepository.findById(id) == null
     }
 
-    def 'removal of event user does not own should fail'() {
+    def 'removal of event user does not own should be forbidden'() {
         given: 'logged-in user and event created by somebody else in database'
         token != null
         String id = insertSampleEvent(someoneElseEvent)

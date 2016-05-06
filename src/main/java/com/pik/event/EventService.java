@@ -69,6 +69,17 @@ public class EventService {
         return new CreateEventResultDTO(result.getId());
     }
 
+    public EventDetailsDTO getEventDetails(String id)
+    {
+        MusicEvent event = eventRepository.findById(id);
+        if (event == null){
+            throw new EventNotFoundException();
+        }
+        return new EventDetailsDTO(event.getDescription(),
+                                    event.getInstrumentsNeeded().stream().map(InstrumentType::getName).collect(toList()),
+                                    event.getParticipants());
+    }
+
 
     public void removeEvent(String token, String id) throws RemoveEventException {
         String owner = getLoginFromToken(token);

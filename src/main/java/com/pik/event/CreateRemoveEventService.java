@@ -1,15 +1,13 @@
 package com.pik.event;
 
+import static com.pik.event.EventsError.*;
 import com.pik.event.dto.CreateEventDTO;
 import com.pik.security.TokenHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.pik.event.EventsError.*;
 
 
 public class CreateRemoveEventService {
@@ -32,7 +30,6 @@ public class CreateRemoveEventService {
         MusicEvent result = eventRepository.save(event);
         return new CreateEventResultDTO(result.getId());
     }
-
 
     public void removeEvent(String token, String id) throws RemoveEventException {
         String owner = getLoginFromToken(token);

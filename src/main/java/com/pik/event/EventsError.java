@@ -6,7 +6,7 @@ public enum EventsError {
     EMPTY_TITLE_FILED("Title must not be empty"),
     USERNAME_ERROR("Can't recognize user"),
     EVENT_ID_ERROR("Event id must not be empty"),
-    EVENT_DOESNT_EXIST("Event doesn't exist"),
+    EVENT_DOES_NOT_EXIST("Event does not exist"),
     NOT_USERS_EVENT("This is not your event");
 
     private String message;

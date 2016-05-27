@@ -114,7 +114,7 @@ class EventServiceSpec extends Specification {
             eventService.removeEvent(token, id)
         then:
             final RemoveEventException exception = thrown()
-            exception.message == EventsError.EVENT_DOESNT_EXIST.message
+            exception.message == EventsError.EVENT_DOES_NOT_EXIST.message
     }
 
     def 'exception should be thrown when user try to remove not her event'(){

@@ -76,7 +76,7 @@ public class CreateRemoveEventService {
 
     private void validateRemoval(String user, MusicEvent event) throws RemoveEventException {
         if (event == null) {
-            throw new RemoveEventException(EVENT_DOESNT_EXIST.getMessage(), HttpStatus.NOT_FOUND);
+            throw new RemoveEventException(EVENT_DOES_NOT_EXIST.getMessage(), HttpStatus.NOT_FOUND);
         }
         if (!user.equals(event.getOwner())) {
             throw new RemoveEventException(NOT_USERS_EVENT.getMessage(), HttpStatus.FORBIDDEN);

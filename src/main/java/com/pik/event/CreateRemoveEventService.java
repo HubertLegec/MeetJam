@@ -1,70 +1,34 @@
 package com.pik.event;
 
-import com.pik.common.InstrumentType;
+import com.pik.event.dto.CreateEventDTO;
 import com.pik.security.TokenHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.pik.event.EventsError.*;
-import static java.util.stream.Collectors.toList;
 
 
-public class EventService {
+public class CreateRemoveEventService {
     private EventRepository eventRepository;
     private TokenHandler tokenHandler;
 
-    public EventService(EventRepository eventRepository, TokenHandler tokenHandler) {
+    public CreateRemoveEventService(EventRepository eventRepository, TokenHandler tokenHandler) {
         this.eventRepository = eventRepository;
         this.tokenHandler = tokenHandler;
     }
 
-    public List<EventDTO> fetchEventsByCityAndInstrumentAndDate(String city, String instrument, String dateFrom, String dateTo) {
-        LocalDateTime parsedFrom = parseDateTime(dateFrom);
-        LocalDateTime parsedTo = parseDateTime(dateTo);
-        InstrumentType instrumentNeeded = InstrumentType.fromString(instrument);
-        List<MusicEvent> eventsByCity = eventRepository
-                .findByCityAndInstrumentNeededAndDateBetween(city, instrumentNeeded, parsedFrom, parsedTo);
-        return transformToEventDTOList(eventsByCity);
-    }
-
-    public List<EventDTO> fetchEventListByOwner(String token, String dateFrom, String dateTo) {
-        LocalDateTime parsedFrom = parseDateTime(dateFrom);
-        LocalDateTime parsedTo = parseDateTime(dateTo);
+    public CreateEventResultDTO createEvent(String token, CreateEventDTO input) {
         String owner = getLoginFromToken(token);
-        if (owner == null) {
-            return new ArrayList<>();
-        }
-        List<MusicEvent> ownerEvents = eventRepository
-                .findByOwnerAndDateBetween(owner, parsedFrom, parsedTo);
-        return transformToEventDTOList(ownerEvents);
-    }
-
-    public List<EventDTO> fetchJoinedEventList(String token, String dateFrom, String dateTo) {
-        LocalDateTime parsedFrom = parseDateTime(dateFrom);
-        LocalDateTime parsedTo = parseDateTime(dateTo);
-        String participant = getLoginFromToken(token);
-        if (participant == null) {
-            return new ArrayList<>();
-        }
-        List<MusicEvent> userEvents = eventRepository
-                .findByParticipantsInAndDateBetween(participant, parsedFrom, parsedTo);
-        return transformToEventDTOList(userEvents);
-    }
-
-    public CreateEventResultDTO createEvent(String token, String title, String city, String date) {
-        String owner = getLoginFromToken(token);
-        LocalDateTime dateTime = parseDateTime(date);
-        List<String> validationMessages = validateCreateInput(owner, title, city, dateTime);
+        List<String> validationMessages = validateCreateInput(owner, input.getTitle(), input.getCity(), input.getDate());
         if (validationMessages.size() > 0) {
             return new CreateEventResultDTO(validationMessages);
         }
 
-        MusicEvent event = new MusicEvent(dateTime, city, title, owner);
+        MusicEvent event = new MusicEvent(input.getDate(), input.getCity(), input.getTitle(), owner);
         MusicEvent result = eventRepository.save(event);
         return new CreateEventResultDTO(result.getId());
     }
@@ -78,18 +42,6 @@ public class EventService {
         eventRepository.delete(eventToRemove);
     }
 
-
-    private LocalDateTime parseDateTime(String value) {
-        if (value == null) {
-            return null;
-        }
-        try {
-            return LocalDateTime.parse(value);
-        } catch (DateTimeParseException e) {
-            return null;
-        }
-    }
-
     private String getLoginFromToken(String token) {
         try {
             return tokenHandler.parseUserFromToken(token)
@@ -97,13 +49,6 @@ public class EventService {
         } catch (UsernameNotFoundException e) {
             return null;
         }
-    }
-
-    private List<EventDTO> transformToEventDTOList(List<MusicEvent> events) {
-        return events
-                .stream()
-                .map(EventDTO::new)
-                .collect(toList());
     }
 
     private List<String> validateCreateInput(String user, String title, String city, LocalDateTime date) {

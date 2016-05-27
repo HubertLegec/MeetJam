@@ -1,9 +1,8 @@
-package com.pik.event;
+package com.pik.event.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pik.event.MusicEvent;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -15,6 +14,7 @@ public class EventDTO {
     private String date; //LocalDateTime formatted as ISO_DATE_TIME
 
     public EventDTO() {
+
     }
 
     public EventDTO(MusicEvent event){

@@ -3,9 +3,10 @@ package com.pik.configuration;
 import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
+import com.pik.event.SearchEventService;
 import com.pik.security.TokenAuthenticationService;
 import com.pik.event.EventRepository;
-import com.pik.event.EventService;
+import com.pik.event.CreateRemoveEventService;
 import com.pik.security.TokenHandler;
 import com.pik.security.UserDetailsStorageService;
 import com.pik.account.authentication.AuthenticationService;
@@ -34,8 +35,13 @@ public class AppConfig {
     }
 
     @Bean
-    EventService eventService(EventRepository eventRepository, TokenHandler tokenHandler){
-        return new EventService(eventRepository, tokenHandler);
+    CreateRemoveEventService eventService(EventRepository eventRepository, TokenHandler tokenHandler){
+        return new CreateRemoveEventService(eventRepository, tokenHandler);
+    }
+
+    @Bean
+    SearchEventService searchEventService(EventRepository eventRepository, TokenHandler tokenHandler){
+        return new SearchEventService(eventRepository, tokenHandler);
     }
 
     @Bean

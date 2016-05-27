@@ -45,10 +45,10 @@ dependencies {
 	compile('commons-validator:commons-validator:1.4.0')
 	compile('edu.vt.middleware:vt-password:3.1.2')
 	compile('io.jsonwebtoken:jjwt:0.4')
-	compile("org.codehaus.groovy:groovy-all:2.4.1")
+	compile('org.codehaus.groovy:groovy-all:2.4.1')
+	compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile ("org.spockframework:spock-core:1.0-groovy-2.4")
-	testCompile ('com.fasterxml.jackson.core:jackson-databind:2.0.1')
     testRuntime("org.spockframework:spock-spring:1.0-groovy-2.4")
 	testCompile ('cglib:cglib-nodep:2.2')       // For mocking classes
 	testCompile ('org.objenesis:objenesis:1.2') // For mocking final classes

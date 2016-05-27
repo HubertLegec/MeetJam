@@ -1,8 +1,8 @@
 package com.pik.account.registration;
 
+import groovy.transform.ToString;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@ToString(includeNames = true)
 public class AccountDTO {
 
     private String login;
@@ -33,13 +33,4 @@ public class AccountDTO {
         this.password = password;
     }
 
-    @JsonIgnore
-    @Override
-    public String toString() {
-        return "AccountDTO{" +
-                "login='" + login + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

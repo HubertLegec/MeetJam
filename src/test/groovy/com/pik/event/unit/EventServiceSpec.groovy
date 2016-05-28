@@ -1,13 +1,13 @@
 package com.pik.event.unit
 
 import com.pik.account.Authority
-import com.pik.event.CreateEventResultDTO
+import com.pik.event.createremove.CreateEventResultDTO
 import com.pik.event.EventRepository
-import com.pik.event.CreateRemoveEventService
+import com.pik.event.createremove.CreateRemoveEventService
 import com.pik.event.EventsError
 import com.pik.event.MusicEvent
-import com.pik.event.RemoveEventException
-import com.pik.event.dto.CreateEventDTO
+import com.pik.event.createremove.RemoveEventException
+import com.pik.event.createremove.CreateEventDTO
 import com.pik.security.TokenHandler
 import org.springframework.security.core.userdetails.User
 import spock.lang.Specification

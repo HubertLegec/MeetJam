@@ -1,10 +1,8 @@
 package com.pik.event.details;
 
 import com.pik.common.InstrumentType;
-import com.pik.event.EventNotFoundException;
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
-import com.pik.event.details.EventDetailsDTO;
 
 import static java.util.stream.Collectors.toList;
 

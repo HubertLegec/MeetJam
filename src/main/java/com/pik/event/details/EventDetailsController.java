@@ -1,8 +1,5 @@
 package com.pik.event.details;
 
-import com.pik.event.EventDetailsService;
-import com.pik.event.EventNotFoundException;
-import com.pik.event.details.EventDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

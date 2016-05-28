@@ -1,18 +1,17 @@
 package com.pik.event.unit
 
 import com.pik.account.Authority
-import com.pik.event.SearchEventService
-import com.pik.event.dto.DateRangeDTO
-import com.pik.event.dto.EventDTO
+import com.pik.event.search.SearchEventService
+import com.pik.event.search.DateRangeDTO
+import com.pik.event.search.EventDTO
 import com.pik.event.EventRepository
 import com.pik.event.MusicEvent
-import com.pik.event.dto.SearchEventParamsDTO
+import com.pik.event.search.SearchEventParamsDTO
 import com.pik.security.TokenHandler
 import org.springframework.security.core.userdetails.User
 import spock.lang.Specification
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class SearchEventServiceSpec extends Specification {
     private static final List<MusicEvent> SAMPLE_EVENTS = [

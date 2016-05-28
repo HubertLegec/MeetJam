@@ -4,9 +4,6 @@ import static com.pik.event.EventsError.*;
 
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
-import com.pik.event.RemoveEventException;
-import com.pik.event.createremove.CreateEventDTO;
-import com.pik.event.createremove.CreateEventResultDTO;
 import com.pik.security.TokenHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

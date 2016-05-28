@@ -1,4 +1,4 @@
-package com.pik.event;
+package com.pik.event.createremove;
 
 import org.springframework.http.HttpStatus;
 

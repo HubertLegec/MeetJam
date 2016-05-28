@@ -1,4 +1,4 @@
-package com.pik.event.dto;
+package com.pik.event.createremove;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

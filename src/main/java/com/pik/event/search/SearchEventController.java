@@ -1,5 +1,6 @@
-package com.pik.event;
+package com.pik.event.search;
 
+import com.pik.event.SearchEventService;
 import com.pik.event.dto.DateRangeDTO;
 import com.pik.event.dto.EventDTO;
 import com.pik.event.dto.SearchEventParamsDTO;

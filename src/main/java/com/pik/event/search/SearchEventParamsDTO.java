@@ -1,4 +1,4 @@
-package com.pik.event.dto;
+package com.pik.event.search;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -1,6 +1,8 @@
-package com.pik.event;
+package com.pik.event.search;
 
 import com.pik.common.InstrumentType;
+import com.pik.event.EventRepository;
+import com.pik.event.MusicEvent;
 import com.pik.event.dto.DateRangeDTO;
 import com.pik.event.dto.EventDTO;
 import com.pik.event.dto.SearchEventParamsDTO;

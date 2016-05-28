@@ -1,4 +1,4 @@
-package com.pik.event.dto;
+package com.pik.event.search;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pik.event.MusicEvent;

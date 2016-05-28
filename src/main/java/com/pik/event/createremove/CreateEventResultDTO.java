@@ -1,4 +1,4 @@
-package com.pik.event;
+package com.pik.event.createremove;
 
 import java.util.ArrayList;
 import java.util.List;

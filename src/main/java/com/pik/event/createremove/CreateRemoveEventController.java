@@ -1,6 +1,9 @@
-package com.pik.event;
+package com.pik.event.createremove;
 
-import com.pik.event.dto.CreateEventDTO;
+import com.pik.event.CreateRemoveEventService;
+import com.pik.event.RemoveEventException;
+import com.pik.event.createremove.CreateEventDTO;
+import com.pik.event.createremove.CreateEventResultDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

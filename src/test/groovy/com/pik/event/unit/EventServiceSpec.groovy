@@ -1,12 +1,13 @@
 package com.pik.event.unit
 
 import com.pik.account.Authority
+import com.pik.event.EventNotFoundException
 import com.pik.event.createremove.CreateEventResultDTO
 import com.pik.event.EventRepository
 import com.pik.event.createremove.CreateRemoveEventService
 import com.pik.event.EventsError
 import com.pik.event.MusicEvent
-import com.pik.event.createremove.RemoveEventException
+import com.pik.event.EventException
 import com.pik.event.createremove.CreateEventDTO
 import com.pik.security.TokenHandler
 import org.springframework.security.core.userdetails.User
@@ -69,9 +70,6 @@ class EventServiceSpec extends Specification {
         eventService = new CreateRemoveEventService(eventRepository, tokenHandler)
     }
 
-
-
-
     def 'should return dto with id when event is created'(){
         given: 'event details'
             CreateEventDTO dto = new CreateEventDTO('Warsaw', LocalDateTime.of(2016, 4, 22, 16, 30), 'title');
@@ -102,7 +100,7 @@ class EventServiceSpec extends Specification {
         when: 'owner removes event'
             eventService.removeEvent(token, id)
         then:
-            final RemoveEventException exception = notThrown()
+            final EventException exception = notThrown()
     }
 
     def 'exception should be thrown when user try to remove not existing event'(){
@@ -113,20 +111,18 @@ class EventServiceSpec extends Specification {
         when:
             eventService.removeEvent(token, id)
         then:
-            final RemoveEventException exception = thrown()
-            exception.message == EventsError.EVENT_DOES_NOT_EXIST.message
+            final EventNotFoundException exception = thrown()
     }
 
     def 'exception should be thrown when user try to remove not her event'(){
         given: 'id is given adn sample events present in database'
-        eventRepository.findById(_) >> SAMPLE_EVENTS[1]
-        String id = '12345abc'
-        String token = 'wetw3rew'
+            eventRepository.findById(_) >> SAMPLE_EVENTS[1]
+            String id = '12345abc'
+            String token = 'wetw3rew'
         when:
-        eventService.removeEvent(token, id)
+            eventService.removeEvent(token, id)
         then:
-        final RemoveEventException exception = thrown()
-        exception.message == EventsError.NOT_USERS_EVENT.message
+            final EventException exception = thrown()
+            exception.message == EventsError.NOT_USERS_EVENT.message
     }
-
 }

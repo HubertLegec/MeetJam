@@ -4,6 +4,7 @@ import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
 import com.pik.event.details.EventDetailsService;
+import com.pik.event.participants.EventParticipantsService;
 import com.pik.event.search.SearchEventService;
 import com.pik.security.TokenAuthenticationService;
 import com.pik.event.EventRepository;
@@ -21,49 +22,54 @@ import org.springframework.security.authentication.AuthenticationManager;
 public class AppConfig {
 
     @Bean
-    LoggingService loggingService(){
+    LoggingService loggingService() {
         return new LoggingService();
     }
 
     @Bean
-    UserDetailsStorageService userDetailsService(AccountRepository accountRepository){
+    UserDetailsStorageService userDetailsService(AccountRepository accountRepository) {
         return new UserDetailsStorageService(accountRepository);
     }
 
     @Bean
-    RegistrationService accountService(AccountRepository accountRepository){
+    RegistrationService accountService(AccountRepository accountRepository) {
         return new RegistrationService(accountRepository);
     }
 
     @Bean
-    CreateRemoveEventService eventService(EventRepository eventRepository, TokenHandler tokenHandler){
+    CreateRemoveEventService eventService(EventRepository eventRepository, TokenHandler tokenHandler) {
         return new CreateRemoveEventService(eventRepository, tokenHandler);
     }
 
     @Bean
-    SearchEventService searchEventService(EventRepository eventRepository, TokenHandler tokenHandler){
+    SearchEventService searchEventService(EventRepository eventRepository, TokenHandler tokenHandler) {
         return new SearchEventService(eventRepository, tokenHandler);
     }
 
     @Bean
-    EventDetailsService eventDetailsService(EventRepository eventRepository){
-        return new EventDetailsService(eventRepository);
+    EventDetailsService eventDetailsService(EventRepository eventRepository, TokenHandler tokenHandler) {
+        return new EventDetailsService(eventRepository, tokenHandler);
+    }
+
+    @Bean
+    EventParticipantsService participantsService(EventRepository eventRepository, TokenHandler tokenHandler) {
+        return new EventParticipantsService(eventRepository, tokenHandler);
     }
 
     @Bean
     AuthenticationService authenticationService(AccountRepository accountRepository,
                                                 AuthenticationManager authenticationManager,
-                                                TokenHandler tokenHandler){
+                                                TokenHandler tokenHandler) {
         return new AuthenticationService(accountRepository, authenticationManager, tokenHandler);
     }
 
     @Bean
-    TokenHandler tokenHandler(UserDetailsStorageService userDetailsService){
+    TokenHandler tokenHandler(UserDetailsStorageService userDetailsService) {
         return new TokenHandler("meetJam", userDetailsService);
     }
 
     @Bean
-    public TokenAuthenticationService tokenAuthenticationService(TokenHandler tokenHandler){
+    public TokenAuthenticationService tokenAuthenticationService(TokenHandler tokenHandler) {
         return new TokenAuthenticationService(tokenHandler);
     }
 

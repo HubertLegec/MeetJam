@@ -2,19 +2,18 @@ package com.pik.event.createremove;
 
 import static com.pik.event.EventsError.*;
 
+import com.pik.event.BaseEventService;
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
+import com.pik.event.EventException;
 import com.pik.security.TokenHandler;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CreateRemoveEventService {
-    private EventRepository eventRepository;
-    private TokenHandler tokenHandler;
+public class CreateRemoveEventService extends BaseEventService {
 
     public CreateRemoveEventService(EventRepository eventRepository, TokenHandler tokenHandler) {
         this.eventRepository = eventRepository;
@@ -33,21 +32,13 @@ public class CreateRemoveEventService {
         return new CreateEventResultDTO(result.getId());
     }
 
-    public void removeEvent(String token, String id) throws RemoveEventException {
+    public void removeEvent(String token, String id) throws EventException {
         String owner = getLoginFromToken(token);
-        validateRemoveInput(owner, id);
+        validateInput(owner, id);
         MusicEvent eventToRemove = eventRepository.findById(id);
-        validateRemoval(owner, eventToRemove);
+        validateEvent(eventToRemove);
+        validatePrivileges(owner, eventToRemove);
         eventRepository.delete(eventToRemove);
-    }
-
-    private String getLoginFromToken(String token) {
-        try {
-            return tokenHandler.parseUserFromToken(token)
-                    .getUsername();
-        } catch (UsernameNotFoundException e) {
-            return null;
-        }
     }
 
     private List<String> validateCreateInput(String user, String title, String city, LocalDateTime date) {
@@ -67,21 +58,5 @@ public class CreateRemoveEventService {
         return result;
     }
 
-    private void validateRemoveInput(String user, String id) throws RemoveEventException {
-        if (user == null || user.length() == 0) {
-            throw new RemoveEventException(USERNAME_ERROR.getMessage(), HttpStatus.NOT_FOUND);
-        }
-        if (id == null || id.length() == 0) {
-            throw new RemoveEventException(EVENT_ID_ERROR.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
-    private void validateRemoval(String user, MusicEvent event) throws RemoveEventException {
-        if (event == null) {
-            throw new RemoveEventException(EVENT_DOES_NOT_EXIST.getMessage(), HttpStatus.NOT_FOUND);
-        }
-        if (!user.equals(event.getOwner())) {
-            throw new RemoveEventException(NOT_USERS_EVENT.getMessage(), HttpStatus.FORBIDDEN);
-        }
-    }
 }

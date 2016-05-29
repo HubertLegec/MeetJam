@@ -1,6 +1,7 @@
 package com.pik.event;
 
 import com.pik.common.InstrumentType;
+import groovy.transform.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 
 @Document
+@ToString(includeNames = true)
 public class MusicEvent {
     @Id
     private String id;
@@ -21,6 +23,7 @@ public class MusicEvent {
     private String city;
     private LocalDateTime date;
     private List<String> participants = new ArrayList<>();
+    private List<String> pendingParticipants = new ArrayList<>();
     private List<InstrumentType> instrumentsNeeded = new ArrayList<>();
 
 
@@ -31,7 +34,9 @@ public class MusicEvent {
         this.owner = owner;
     }
 
-    public String getId(){ return id; }
+    public String getId() {
+        return id;
+    }
 
     public String getCity() {
         return city;
@@ -73,14 +78,50 @@ public class MusicEvent {
         this.description = description;
     }
 
-    public void addParticipant(String login){
-        if(!participants.contains(login)) {
+    public void setInstrumentsNeeded(List<InstrumentType> instrumentsNeeded) {
+        this.instrumentsNeeded = instrumentsNeeded;
+    }
+
+    public void addParticipant(String login) {
+        if (!participants.contains(login)) {
             participants.add(login);
         }
     }
 
-    public void addNeededInstrument(InstrumentType instrument){
-        if(!instrumentsNeeded.contains(instrument)){
+    public boolean addPendingParticipant(String login) {
+        if (!pendingParticipants.contains(login) && !participants.contains(login)) {
+            pendingParticipants.add(login);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<String> getPendingParticipants() {
+        return pendingParticipants;
+    }
+
+    public boolean acceptUser(String login) {
+        if (pendingParticipants.contains(login)) {
+            pendingParticipants.remove(login);
+            participants.add(login);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean rejectUser(String login) {
+        return pendingParticipants.remove(login);
+    }
+
+    public void removeParticipant(String userName) {
+        pendingParticipants.remove(userName);
+        participants.remove(userName);
+    }
+
+    public void addNeededInstrument(InstrumentType instrument) {
+        if (!instrumentsNeeded.contains(instrument)) {
             instrumentsNeeded.add(instrument);
         }
     }
@@ -89,20 +130,8 @@ public class MusicEvent {
         return instrumentsNeeded;
     }
 
-    public List<String> getParticipants(){
+    public List<String> getParticipants() {
         return participants;
     }
 
-    @Override
-    public String toString() {
-        return "MusicEvent{" +
-                "owner='" + owner + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", city='" + city + '\'' +
-                ", date=" + date +
-                ", participants=" + participants +
-                ", instrumentsNeeded=" + instrumentsNeeded +
-                '}';
-    }
 }

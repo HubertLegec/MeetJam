@@ -1,5 +1,6 @@
 package com.pik.event.createremove;
 
+import com.pik.event.EventException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class CreateRemoveEventController {
         try {
             createRemoveEventService.removeEvent(token, id);
             return ResponseEntity.ok("REMOVED");
-        } catch (RemoveEventException e) {
+        } catch (EventException e) {
             return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }

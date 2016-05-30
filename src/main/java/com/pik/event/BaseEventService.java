@@ -10,10 +10,7 @@ public class BaseEventService {
     protected EventRepository eventRepository;
     protected TokenHandler tokenHandler;
 
-    protected void validateInput(String user, String id) {
-        if (user == null || user.length() == 0) {
-            throw new EventException(USERNAME_ERROR.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    protected void validateInput(String id) {
         if (id == null || id.length() == 0) {
             throw new EventException(EVENT_ID_ERROR.getMessage(), HttpStatus.BAD_REQUEST);
         }

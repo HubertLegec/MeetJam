@@ -22,7 +22,7 @@ public class RegistrationService {
 
     public Account createNewAccount(AccountDTO accountDTO){
         validate(accountDTO);
-        String hashedPassword = encoder.encode(accountDTO.getPassword());
+        String hashedPassword = generateEncodedPassword(accountDTO.getPassword());
         Account newAccount = new Account(
                 accountDTO.getLogin(),
                 hashedPassword,
@@ -48,6 +48,10 @@ public class RegistrationService {
         if(!errors.isEmpty()) {
             throw new InvalidRegisterParametersException(errors, passwordValidator.getLastPasswordIssues());
         }
+    }
+
+    public String generateEncodedPassword(String passwordToEncode){
+        return encoder.encode(passwordToEncode);
     }
 
 }

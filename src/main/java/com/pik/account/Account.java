@@ -1,25 +1,26 @@
 package com.pik.account;
 
-import com.pik.account.details.AccountDetails;
+import com.pik.account.profile.AccountDetails;
+import groovy.transform.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Document
+@ToString(includeNames = true, excludes = {"id"})
 public class Account implements UserDetails {
     @Id
-    private BigInteger id;
+    private String id;
     private String login;
     private String password;
     private String email;
     private List<Authority> authorities = new ArrayList<>();
-    private AccountDetails details;
+    private AccountDetails details = new AccountDetails();
 
     public Account(String login, String password, String email) {
         this.details = new AccountDetails();
@@ -44,6 +45,18 @@ public class Account implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public AccountDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(AccountDetails details) {
+        this.details = details;
     }
 
     @Override
@@ -71,13 +84,4 @@ public class Account implements UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", authorities=" + authorities +
-                '}';
-    }
 }

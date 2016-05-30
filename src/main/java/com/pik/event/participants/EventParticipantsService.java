@@ -18,7 +18,7 @@ public class EventParticipantsService extends BaseEventService{
 
     public void joinEvent(String token, String id){
         String user = getLoginFromToken(token);
-        validateInput(user, id);
+        validateInput(id);
         MusicEvent event = eventRepository.findById(id);
         validateEvent(event);
         checkIfJoinedBefore(event, user);
@@ -28,7 +28,7 @@ public class EventParticipantsService extends BaseEventService{
 
     public void leaveEvent(String token, String id){
         String user = getLoginFromToken(token);
-        validateInput(user, id);
+        validateInput(id);
         MusicEvent event = eventRepository.findById(id);
         validateEvent(event);
         event.removeParticipant(user);
@@ -37,7 +37,7 @@ public class EventParticipantsService extends BaseEventService{
 
     public void acceptUser(String token, String id, String userName){
         String owner = getLoginFromToken(token);
-        validateInput(owner, id);
+        validateInput(id);
         MusicEvent event = eventRepository.findById(id);
         validateEvent(event);
         validatePrivileges(owner, event);
@@ -50,7 +50,7 @@ public class EventParticipantsService extends BaseEventService{
 
     public void rejectUser(String token, String id, String userName){
         String owner = getLoginFromToken(token);
-        validateInput(owner, id);
+        validateInput(id);
         MusicEvent event = eventRepository.findById(id);
         validateEvent(event);
         validatePrivileges(owner, event);
@@ -63,7 +63,7 @@ public class EventParticipantsService extends BaseEventService{
 
     public List<String> getPendingUsers(String token, String id){
         String owner = getLoginFromToken(token);
-        validateInput(owner, id);
+        validateInput(id);
         MusicEvent event = eventRepository.findById(id);
         validateEvent(event);
         validatePrivileges(owner, event);

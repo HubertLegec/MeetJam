@@ -34,7 +34,7 @@ public class CreateRemoveEventService extends BaseEventService {
 
     public void removeEvent(String token, String id) throws EventException {
         String owner = getLoginFromToken(token);
-        validateInput(owner, id);
+        validateInput(id);
         MusicEvent eventToRemove = eventRepository.findById(id);
         validateEvent(eventToRemove);
         validatePrivileges(owner, eventToRemove);

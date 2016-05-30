@@ -1,5 +1,6 @@
 package com.pik.configuration;
 
+import com.pik.account.profile.ProfileService;
 import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
@@ -54,6 +55,11 @@ public class AppConfig {
     @Bean
     EventParticipantsService participantsService(EventRepository eventRepository, TokenHandler tokenHandler) {
         return new EventParticipantsService(eventRepository, tokenHandler);
+    }
+
+    @Bean
+    ProfileService profileService(AccountRepository accountRepository, TokenHandler tokenHandler) {
+        return new ProfileService(accountRepository, tokenHandler);
     }
 
     @Bean

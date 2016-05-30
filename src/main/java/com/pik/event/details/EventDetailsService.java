@@ -33,7 +33,7 @@ public class EventDetailsService extends BaseEventService {
 
     public void updateEventDetails(String token, UpdateDetailsDTO input) {
         String owner = getLoginFromToken(token);
-        validateInput(owner, input.getId());
+        validateInput(input.getId());
         MusicEvent eventToUpdate = eventRepository.findById(input.getId());
         validateEvent(eventToUpdate);
         validatePrivileges(owner, eventToUpdate);

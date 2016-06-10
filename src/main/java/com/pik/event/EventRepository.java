@@ -28,4 +28,6 @@ public interface EventRepository extends MongoRepository<MusicEvent, String> {
                                                                  LocalDateTime dateFrom,
                                                                  LocalDateTime dateTo);
     MusicEvent findById(String id);
+
+    List<MusicEvent> findByPendingParticipantsIn(String pendingParticipant);
 }

@@ -53,6 +53,12 @@ public class EventParticipantsController {
         return ResponseEntity.ok(result);
     }
 
+    @RequestMapping(value = "eventsUserPending", method = GET, produces = APPLICATION_JSON_VALUE)
+    ResponseEntity<List<String>> getEventsUserPending(@RequestHeader(value = "X-AUTH-TOKEN") String token) {
+        List<String> result = eventParticipantsService.getListOfEventsUserPending(token);
+        return ResponseEntity.ok(result);
+    }
+
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Event not found")
     @ExceptionHandler(EventNotFoundException.class)
     public void statusForNoSuchEvent() {

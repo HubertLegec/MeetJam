@@ -5,7 +5,11 @@ import com.pik.event.EventException;
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
 import com.pik.security.TokenHandler;
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -71,6 +75,13 @@ public class EventParticipantsService extends BaseEventService{
         validateEvent(event);
         validatePrivileges(owner, event);
         return event.getPendingParticipants();
+    }
+
+    List<String> getListOfEventsUserPending(String token){
+        String userName = getLoginFromToken(token);
+        return eventRepository.findByPendingParticipantsIn(userName)
+                .stream()
+                .map( MusicEvent::getId).collect(toList());
     }
 
     private void checkIfJoinedBefore(MusicEvent event, String userName){

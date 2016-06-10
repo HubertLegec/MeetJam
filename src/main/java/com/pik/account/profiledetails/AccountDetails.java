@@ -1,4 +1,4 @@
-package com.pik.account.profile;
+package com.pik.account.profiledetails;
 
 import com.pik.common.InstrumentType;
 

@@ -1,4 +1,4 @@
-package com.pik.account.profile.dto;
+package com.pik.account.profiledetails.dto;
 
 import groovy.transform.ToString;
 

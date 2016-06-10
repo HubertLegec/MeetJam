@@ -1,9 +1,9 @@
-package com.pik.account.profile;
+package com.pik.account.profiledetails;
 
-import com.pik.account.profile.dto.ChangeEmailDTO;
-import com.pik.account.profile.dto.ChangePasswordDTO;
-import com.pik.account.profile.dto.ProfileDTO;
-import com.pik.account.profile.dto.UpdateDetailsDTO;
+import com.pik.account.profiledetails.dto.ChangeEmailDTO;
+import com.pik.account.profiledetails.dto.ChangePasswordDTO;
+import com.pik.account.profiledetails.dto.ProfileDTO;
+import com.pik.account.profiledetails.dto.UpdateDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

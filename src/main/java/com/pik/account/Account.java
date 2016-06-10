@@ -1,6 +1,6 @@
 package com.pik.account;
 
-import com.pik.account.profile.AccountDetails;
+import com.pik.account.profiledetails.AccountDetails;
 import groovy.transform.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,11 +1,11 @@
-package com.pik.account.profile;
+package com.pik.account.profiledetails;
 
 import com.pik.account.Account;
 import com.pik.account.AccountRepository;
-import com.pik.account.profile.dto.ChangeEmailDTO;
-import com.pik.account.profile.dto.ChangePasswordDTO;
-import com.pik.account.profile.dto.ProfileDTO;
-import com.pik.account.profile.dto.UpdateDetailsDTO;
+import com.pik.account.profiledetails.dto.ChangeEmailDTO;
+import com.pik.account.profiledetails.dto.ChangePasswordDTO;
+import com.pik.account.profiledetails.dto.ProfileDTO;
+import com.pik.account.profiledetails.dto.UpdateDetailsDTO;
 import com.pik.account.utils.CustomPasswordValidator;
 import com.pik.common.InstrumentType;
 import com.pik.security.TokenHandler;

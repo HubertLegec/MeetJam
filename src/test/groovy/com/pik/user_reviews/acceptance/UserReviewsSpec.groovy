@@ -66,12 +66,12 @@ class UserReviewsSpec extends MvcIntegrationSpec{
                 .andReturn()
                 .response
                 .contentAsString)
-        for(int i = 0; i < list.size(); i++){
-            if(!reviewsEqual(jsonResult[i], list[i])){
-                return false
-            }
+        if(reviewsEqual(jsonResult[0], list[0])&&reviewsEqual(jsonResult[1], list[1])
+        || reviewsEqual(jsonResult[0], list[1])&&reviewsEqual(jsonResult[1], list[0])){
+            return true
         }
-        return true
+
+        return false
     }
 
     private static boolean reviewsEqual(def fromJson, Review review){

@@ -8,7 +8,15 @@ public class ProfilePicture {
     @Id
     private String id;
     private String userLogin;
+    private byte[] image;
 
+    public ProfilePicture() {
+    }
+
+    public ProfilePicture(String userLogin, byte[] image) {
+        this.userLogin = userLogin;
+        this.image = image;
+    }
 
     public String getId() {
         return id;
@@ -24,5 +32,13 @@ public class ProfilePicture {
 
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

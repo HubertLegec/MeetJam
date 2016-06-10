@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.ResultActions
 import spock.lang.Shared
 
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 import static com.pik.common.InstrumentType.*
 import static java.time.format.DateTimeFormatter.*
@@ -23,7 +22,7 @@ class EventListSpec extends MvcIntegrationSpec {
     private static final String EVENT_LIST_URL = '/api/event/list'
     private static final String MY_EVENT_LIST_URL = '/api/event/myList'
     private static final String JOINED_LIST_URL = '/api/event/joinedList'
-    private static final String INSTRUMENT_LIST_URL = '/api/event/availableInstruments'
+    private static final String INSTRUMENT_LIST_URL = '/api/utils/availableInstruments'
 
     @Shared private String token
     @Autowired

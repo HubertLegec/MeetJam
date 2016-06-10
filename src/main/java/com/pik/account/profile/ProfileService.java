@@ -28,7 +28,7 @@ public class ProfileService {
         this.tokenHandler = tokenHandler;
     }
 
-    public ProfileDTO getProfileDetails(String login) {
+    ProfileDTO getProfileDetails(String login) {
         Account account = accountRepository.findByLogin(login);
         if (account == null) {
             throw new LoginDoesNotExistException();
@@ -36,14 +36,14 @@ public class ProfileService {
         return new ProfileDTO(account);
     }
 
-    public void updateProfileDetails(String token, UpdateDetailsDTO dto) {
+    void updateProfileDetails(String token, UpdateDetailsDTO dto) {
         String userName = getLoginFromToken(token);
         Account account = accountRepository.findByLogin(userName);
         updateChangedDetails(account, dto);
         accountRepository.save(account);
     }
 
-    public void changePassword(String token, ChangePasswordDTO dto) {
+    void changePassword(String token, ChangePasswordDTO dto) {
         String username = getLoginFromToken(token);
         Account account = accountRepository.findByLogin(username);
         validateOldPassword(dto.getOldPassword(), account);
@@ -53,7 +53,7 @@ public class ProfileService {
         accountRepository.save(account);
     }
 
-    public void changeEMail(String token, ChangeEmailDTO dto) {
+    void changeEMail(String token, ChangeEmailDTO dto) {
         String username = getLoginFromToken(token);
         Account account = accountRepository.findByLogin(username);
         account.setEmail(dto.getEmail());

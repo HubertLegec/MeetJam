@@ -64,11 +64,11 @@ public class AppConfig {
         return new ProfileService(accountRepository, tokenHandler);
     }
 
-
-
     @Bean
-    UserReviewsService userReviewsService(UserReviewsRepository userReviewsRepository) {
-        return new UserReviewsService(userReviewsRepository);
+    UserReviewsService userReviewsService(UserReviewsRepository userReviewsRepository,
+                                          AccountRepository accountRepository,
+                                          TokenHandler tokenHandler) {
+        return new UserReviewsService(userReviewsRepository, accountRepository, tokenHandler);
     }
 
 

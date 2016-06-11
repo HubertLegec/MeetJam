@@ -31,6 +31,10 @@ public class Review {
         return rating;
     }
 
+    public String getReviewedLogin() {
+        return reviewedLogin;
+    }
+
     public String getComment() {
         return comment;
     }

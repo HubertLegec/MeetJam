@@ -1,41 +1,20 @@
 package com.pik.event.unit
 
-import com.pik.account.Authority
-import com.pik.event.EventNotFoundException
-import com.pik.event.createremove.CreateEventResultDTO
-import com.pik.event.EventRepository
-import com.pik.event.createremove.CreateRemoveEventService
-import com.pik.event.EventsError
+import com.pik.event.exception.EventException
+import com.pik.event.exception.EventNotFoundException
+import com.pik.event.exception.EventsError
 import com.pik.event.MusicEvent
-import com.pik.event.EventException
 import com.pik.event.createremove.CreateEventDTO
-import com.pik.security.TokenHandler
-import org.springframework.security.core.userdetails.User
-import spock.lang.Specification
+import com.pik.event.createremove.CreateEventResultDTO
+import com.pik.event.createremove.CreateRemoveEventService
 
 import java.time.LocalDateTime
 
-class EventServiceSpec extends Specification {
-    private static final List<MusicEvent> SAMPLE_EVENTS = [
-            new MusicEvent(LocalDateTime.of(2016, 2, 10, 0, 0), 'Warsaw', 'First event', 'Zosia'),
-            new MusicEvent(LocalDateTime.of(2016, 3, 10, 0, 0), 'Warsaw', 'Second event', 'Adam'),
-            new MusicEvent(LocalDateTime.of(2016, 1, 22, 0, 0), 'Warsaw', 'Third event', 'Zosia'),
-            new MusicEvent(LocalDateTime.of(2016, 2, 5, 0, 0), 'Cracow', 'Fourth event', 'Adam'),
-    ]
-
-    static {
-        SAMPLE_EVENTS[1].addParticipant('Zosia')
-        SAMPLE_EVENTS[3].addParticipant('Zosia')
-    }
+class EventServiceSpec extends EventServiceBaseSpec {
 
     private CreateRemoveEventService eventService
-    private EventRepository eventRepository
-    private TokenHandler tokenHandler
 
     def setup(){
-        eventRepository = Mock()
-        tokenHandler = Mock()
-        tokenHandler.parseUserFromToken(_) >> new User('Zosia', 'zosia123', [new Authority('USER')])
         eventRepository.findByOwnerAndDateBetween(_ , _ , _) >>
                 { String owner, LocalDateTime from, LocalDateTime to ->
                     return SAMPLE_EVENTS.findAll{

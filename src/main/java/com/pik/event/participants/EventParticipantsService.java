@@ -1,16 +1,15 @@
 package com.pik.event.participants;
 
 import com.pik.event.BaseEventService;
-import com.pik.event.EventException;
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
+import com.pik.event.exception.EventException;
 import com.pik.security.TokenHandler;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+import static com.pik.event.exception.EventsError.*;
 import static java.util.stream.Collectors.toList;
-
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -22,7 +21,7 @@ public class EventParticipantsService extends BaseEventService{
         this.tokenHandler = tokenHandler;
     }
 
-    void joinEvent(String token, String id){
+    public void joinEvent(String token, String id){
         String user = getLoginFromToken(token);
         validateInput(id);
         MusicEvent event = eventRepository.findById(id);
@@ -49,7 +48,7 @@ public class EventParticipantsService extends BaseEventService{
         validateEvent(event);
         validatePrivileges(owner, event);
         if(!event.getPendingParticipants().contains(userName)){
-            throw new EventException("No such user waits for approval", NOT_FOUND);
+            throw new EventException(NO_SUCH_USER, NOT_FOUND);
         }
         event.acceptUser(userName);
         eventRepository.save(event);
@@ -62,7 +61,7 @@ public class EventParticipantsService extends BaseEventService{
         validateEvent(event);
         validatePrivileges(owner, event);
         if(!event.getPendingParticipants().contains(userName)){
-            throw new EventException("No such user waits for approval", NOT_FOUND);
+            throw new EventException(NO_SUCH_USER, NOT_FOUND);
         }
         event.rejectUser(userName);
         eventRepository.save(event);
@@ -86,16 +85,16 @@ public class EventParticipantsService extends BaseEventService{
 
     private void checkIfJoinedBefore(MusicEvent event, String userName){
         if(event.getParticipants().contains(userName)){
-            throw new EventException("Usser has already joined this course", CONFLICT);
+            throw new EventException(USER_ALREADY_JOINED, CONFLICT);
         }
         if (event.getPendingParticipants().contains(userName)){
-            throw new EventException("User is waiting for owner's approval", CONFLICT);
+            throw new EventException(USER_IS_WAITING_FOR_APPROVAL, CONFLICT);
         }
     }
 
     private void checkIfOwnEvent(MusicEvent event, String userName) {
         if(event.getOwner().equals(userName)) {
-            throw new EventException("You can't join your own event!", CONFLICT);
+            throw new EventException(CAN_NOT_JOIN_OWN_EVENT, CONFLICT);
         }
     }
 }

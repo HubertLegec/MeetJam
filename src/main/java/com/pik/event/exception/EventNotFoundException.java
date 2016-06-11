@@ -1,4 +1,4 @@
-package com.pik.event;
+package com.pik.event.exception;
 
 public class EventNotFoundException extends RuntimeException{
 }

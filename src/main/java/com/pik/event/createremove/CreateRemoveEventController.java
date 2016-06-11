@@ -1,6 +1,6 @@
 package com.pik.event.createremove;
 
-import com.pik.event.EventException;
+import com.pik.event.exception.EventException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

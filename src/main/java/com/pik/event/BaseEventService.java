@@ -1,10 +1,14 @@
 package com.pik.event;
 
+import com.pik.event.exception.EventException;
+import com.pik.event.exception.EventNotFoundException;
 import com.pik.security.TokenHandler;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import static com.pik.event.EventsError.*;
+import static com.pik.event.exception.EventsError.EVENT_ID_ERROR;
+import static com.pik.event.exception.EventsError.NOT_USERS_EVENT;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 public class BaseEventService {
     protected EventRepository eventRepository;
@@ -12,7 +16,7 @@ public class BaseEventService {
 
     protected void validateInput(String id) {
         if (id == null || id.length() == 0) {
-            throw new EventException(EVENT_ID_ERROR.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new EventException(EVENT_ID_ERROR, BAD_REQUEST);
         }
     }
 
@@ -24,7 +28,7 @@ public class BaseEventService {
 
     protected void validatePrivileges(String user, MusicEvent event) {
         if (!user.equals(event.getOwner())) {
-            throw new EventException(NOT_USERS_EVENT.getMessage(), HttpStatus.FORBIDDEN);
+            throw new EventException(NOT_USERS_EVENT, FORBIDDEN);
         }
     }
 

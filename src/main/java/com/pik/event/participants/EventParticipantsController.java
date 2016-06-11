@@ -1,7 +1,7 @@
 package com.pik.event.participants;
 
-import com.pik.event.EventException;
-import com.pik.event.EventNotFoundException;
+import com.pik.event.exception.EventException;
+import com.pik.event.exception.EventNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

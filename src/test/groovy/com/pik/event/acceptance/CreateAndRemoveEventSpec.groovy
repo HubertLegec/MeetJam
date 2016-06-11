@@ -2,7 +2,7 @@ package com.pik.event.acceptance
 
 import com.pik.base.MvcIntegrationSpec
 import com.pik.event.EventRepository
-import com.pik.event.EventsError
+import com.pik.event.exception.EventsError
 import com.pik.event.MusicEvent
 import groovy.json.JsonSlurper
 import org.springframework.beans.factory.annotation.Autowired

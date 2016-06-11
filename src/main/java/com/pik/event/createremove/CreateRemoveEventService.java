@@ -1,16 +1,16 @@
 package com.pik.event.createremove;
 
-import static com.pik.event.EventsError.*;
-
 import com.pik.event.BaseEventService;
 import com.pik.event.EventRepository;
 import com.pik.event.MusicEvent;
-import com.pik.event.EventException;
+import com.pik.event.exception.EventException;
 import com.pik.security.TokenHandler;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.pik.event.exception.EventsError.*;
 
 
 public class CreateRemoveEventService extends BaseEventService {

@@ -1,6 +1,8 @@
 package com.pik.configuration;
 
-import com.pik.account.profile.ProfileService;
+import com.pik.account.profiledetails.ProfileService;
+import com.pik.account.profilepicture.ProfilePictureRepository;
+import com.pik.account.profilepicture.ProfilePictureService;
 import com.pik.aop.LoggingService;
 import com.pik.account.AccountRepository;
 import com.pik.account.registration.RegistrationService;
@@ -60,6 +62,11 @@ public class AppConfig {
     @Bean
     ProfileService profileService(AccountRepository accountRepository, TokenHandler tokenHandler) {
         return new ProfileService(accountRepository, tokenHandler);
+    }
+
+    @Bean
+    ProfilePictureService profilePictureService(TokenHandler tokenHandler, ProfilePictureRepository profilePictureRepository) {
+        return new ProfilePictureService(tokenHandler, profilePictureRepository);
     }
 
     @Bean

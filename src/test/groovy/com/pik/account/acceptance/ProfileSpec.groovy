@@ -2,10 +2,10 @@ package com.pik.account.acceptance
 
 import com.pik.account.Account
 import com.pik.account.AccountRepository
-import com.pik.account.profile.AccountDetails
-import com.pik.account.profile.dto.ChangeEmailDTO
-import com.pik.account.profile.dto.ChangePasswordDTO
-import com.pik.account.profile.dto.UpdateDetailsDTO
+import com.pik.account.profiledetails.AccountDetails
+import com.pik.account.profiledetails.dto.ChangeEmailDTO
+import com.pik.account.profiledetails.dto.ChangePasswordDTO
+import com.pik.account.profiledetails.dto.UpdateDetailsDTO
 import com.pik.base.MvcIntegrationSpec
 import com.pik.common.InstrumentType
 import groovy.json.JsonOutput
@@ -68,7 +68,7 @@ class ProfileSpec extends MvcIntegrationSpec {
             Account account = accountRepository.findByLogin(login)
             account.details.setPhoneNumber('888777666')
             accountRepository.save(account)
-        when: 'user updates profile details'
+        when: 'user updates profiledetails details'
             def response = sendUpdateDetailsRequest(DETAILS_DTO)
         then: 'details in database have changed'
             response.andExpect(status().isOk())

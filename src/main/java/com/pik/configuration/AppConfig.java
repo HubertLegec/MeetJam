@@ -15,6 +15,8 @@ import com.pik.event.createremove.CreateRemoveEventService;
 import com.pik.security.TokenHandler;
 import com.pik.security.UserDetailsStorageService;
 import com.pik.account.authentication.AuthenticationService;
+import com.pik.user_reviews.UserReviewsRepository;
+import com.pik.user_reviews.UserReviewsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -68,6 +70,14 @@ public class AppConfig {
     ProfilePictureService profilePictureService(TokenHandler tokenHandler, ProfilePictureRepository profilePictureRepository) {
         return new ProfilePictureService(tokenHandler, profilePictureRepository);
     }
+
+    @Bean
+    UserReviewsService userReviewsService(UserReviewsRepository userReviewsRepository,
+                                          AccountRepository accountRepository,
+                                          TokenHandler tokenHandler) {
+        return new UserReviewsService(userReviewsRepository, accountRepository, tokenHandler);
+    }
+
 
     @Bean
     AuthenticationService authenticationService(AccountRepository accountRepository,

@@ -14,13 +14,9 @@ public class UserReviewsService {
         this.userReviewsRepository = userReviewsRepository;
     }
 
-    public List<ReviewDTO> getReviewsOfUser(String userLogin, int page) {
+    List<ReviewDTO> getReviewsOfUser(String userLogin, int page) {
         Pageable pageable = new PageRequest(page, 20);
         List<Review> reviews = userReviewsRepository.findByReviewedLogin(userLogin, pageable);
-        return reviews.stream().map(this::transformReviewToDTO).collect(Collectors.toList());
-    }
-
-    private ReviewDTO transformReviewToDTO(Review review) {
-        return new ReviewDTO(review.getReviewerLogin(), review.getComment(), review.getRating());
+        return reviews.stream().map(ReviewDTO::new).collect(Collectors.toList());
     }
 }

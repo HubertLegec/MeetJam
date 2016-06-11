@@ -29,6 +29,12 @@ public class ProfilePictureService {
         }
     }
 
+    ProfilePicture getUserProfilePicture(String token) {
+        String userName = getLoginFromToken(token);
+        ProfilePicture profilePicture = profilePictureRepository.getProfilePictureByUserLogin(userName);
+        return profilePicture;
+    }
+
     private byte[] getBytesFromMultipartFile(MultipartFile file) {
         try {
             return file.getBytes();
